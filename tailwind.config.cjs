@@ -8,7 +8,8 @@ export default {
     extend: {
       colors: {
         ivory: '#F6F7EB',
-        onyx: '#393E41'
+        onyx: '#393E41',
+        keppel: '#44BBA4'
       }
     },
   },
