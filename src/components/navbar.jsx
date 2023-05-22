@@ -11,7 +11,7 @@ class NavButton extends Component {
           className="mr-3 bg-onyx text-white rounded-lg w-32 py-1 bg-opacity-70 hover:bg-opacity-100 cursor-pointer transition duration-150 items-center text-center hover:shadow-sm hover:shadow-onyx"
           onClick={onClick}
         >
-          {text}
+          <h1 className='font-sans'>{text}</h1>
         </div>
 
       );
@@ -24,36 +24,51 @@ class Navbar extends Component {
         super(props);
         this.state = {
         height: 'h-14',
-        width: 'w-[93%]'
+        width: 'w-[93%]',
+        opacity: 'opacity-100',
+        refreshState: 'Hold to refresh'
         };
-        this.pop = this.pop.bind(this);
+        this.handleMouseDown = this.handleMouseDown.bind(this);
+        this.handleMouseUp = this.handleMouseUp.bind(this);
     }
 
-    pop() {
-        this.setState({ height: 'h-16' });
-        this.setState({ width: 'w-[94%]'})
-
-        setTimeout(() => {
-        this.setState({ height: 'h-14' });
-        this.setState({ width: 'w-[93%]' })
-        }, 30); // Adjust the duration as desired
-    }
+    handleMouseDown() {
+        this.setState({
+          height: 'h-16',
+          width: 'w-[95%]',
+          opacity: 'opacity-70',
+          refreshState: 'Refreshing...'
+        });
+      }
+    
+      handleMouseUp() {
+        this.setState({
+          height: 'h-14',
+          width: 'w-[93%]',
+          opacity: 'opacity-100',
+          refreshState: 'Hold to refresh'
+        });
+      }
 
     render() {
-        const { height, width } = this.state;
-        const navbarClassName = `${width} ${height} bg-white rounded-2xl opacity-50 hover:opacity-100 hover:bg-opacity-70 hover:shadow-xl shadow-lg shadow-onyx`;
+        const { height, width, opacity, refreshState } = this.state;
+        const navbarClassName = `${width} ${height} bg-white rounded-2xl ${opacity} shadow-lg `;
 
         return (
         <div className="flex items-center justify-center fixed w-screen mt-5">
             <div
             className={navbarClassName}
-            onClick={this.pop}
+            onMouseDown={this.handleMouseDown}
+            onMouseUp={this.handleMouseUp}
             >
             <div className="flex items-center justify-between h-full mx-auto">
-                <h1 className="ml-5 text-lg">PoliticsBoard</h1>
+                <h1 className="ml-5 text-lg font-sans">PoliticsBoard</h1>
+                <div className="flex items-center h-full mx-auto opacity-50 pointer-events-none">
+                    <h1 className='ml-24 text-lg font-sans'>{refreshState}</h1>
+                </div>
                 <div className="flex">
-                <NavButton text="Register" />
-                <NavButton text="Log In" />
+                <NavButton text="Register" onClick={() => (window.location = '/')} />
+                <NavButton text="Log In" onClick={() => (window.location = '/')} />
                 </div>
             </div>
             </div>
