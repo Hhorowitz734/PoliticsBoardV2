@@ -14,7 +14,7 @@ class User extends Component {
 
     render() {
         return (
-            <div className="grid grid-cols-11 w-full h-14 hover:bg-gray-200 items-center cursor-pointer">
+            <div data-testid='trending-user-component' className="grid grid-cols-11 w-full h-14 hover:bg-gray-200 items-center cursor-pointer">
                 <div className="col-span-1">
                     <h1 className="text-2xl">{this.position}</h1>
                 </div>
@@ -38,13 +38,16 @@ class UsersTrends extends Component {
         super(props);
         //THIS IS TESTING CODE
         //DELETE WHEN YOU SET UP A TESTING SUITE
-        this.usersTest = [
-            {name: "Benjamin Horowitz", img: "https://cdn.britannica.com/71/234471-050-093F4211/shiba-inu-dog-in-the-snow.jpg", score: 32000},
-            {name: "John Doe", img: "https://cdn.britannica.com/71/234471-050-093F4211/shiba-inu-dog-in-the-snow.jpg", score: 30000},
-            {name: "Zubayer Jones", img: "https://cdn.britannica.com/71/234471-050-093F4211/shiba-inu-dog-in-the-snow.jpg", score: 27000},
-            {name: "Chad Chadson", img: "https://cdn.britannica.com/71/234471-050-093F4211/shiba-inu-dog-in-the-snow.jpg", score: 5000},
-            {name: "Mario Jakeson", img: "https://cdn.britannica.com/71/234471-050-093F4211/shiba-inu-dog-in-the-snow.jpg", score: 3000}
-        ]
+
+        // this.usersTest = [
+        //     {name: "Benjamin Horowitz", img: "https://cdn.britannica.com/71/234471-050-093F4211/shiba-inu-dog-in-the-snow.jpg", score: 32000},
+        //     {name: "John Doe", img: "https://cdn.britannica.com/71/234471-050-093F4211/shiba-inu-dog-in-the-snow.jpg", score: 30000},
+        //     {name: "Zubayer Jones", img: "https://cdn.britannica.com/71/234471-050-093F4211/shiba-inu-dog-in-the-snow.jpg", score: 27000},
+        //     {name: "Chad Chadson", img: "https://cdn.britannica.com/71/234471-050-093F4211/shiba-inu-dog-in-the-snow.jpg", score: 5000},
+        //     {name: "Mario Jakeson", img: "https://cdn.britannica.com/71/234471-050-093F4211/shiba-inu-dog-in-the-snow.jpg", score: 3000}
+        // ]
+
+        this.usersTest = props.trendingUsers; //Replace 'usersTest' with more useful variable name in the future
     }
 
     render() {
