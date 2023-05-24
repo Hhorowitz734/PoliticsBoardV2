@@ -1,4 +1,4 @@
-import {React, Component} from 'react';
+import React, {Component} from 'react';
 
 //Class for component containing tags
 class Tag extends Component{
@@ -21,7 +21,7 @@ class Tag extends Component{
 
     render () {
         return (
-            <div>
+            <div data-testid='trending-tag-component'>
                 <h1
                 className="w-fit m-1 px-1 border border-transparent rounded-lg cursor-pointer"
                 style = {{backgroundColor: `${this.tagObject.color}${this.normalOpacity}`}}
@@ -37,6 +37,16 @@ class TagsTrends extends Component {
 
     constructor(props){
         super(props);
+
+        //passes trending user objects to UsersTrends so it can be mapped to users
+        //also establishes a path for testing vs development (to be standardized later)
+        if (process.env.NODE_ENV === 'development') {
+            this.tags = this.getTrendingTags();
+          } else {
+            this.tags = props.trendingTags; //Replace 'usersTest' with more useful variable name in the future
+          }
+          
+          
     }
 
     getTrendingTags() {
@@ -78,7 +88,7 @@ class TagsTrends extends Component {
             <div className="overflow-y-scroll h-fit max-h-[25vh]">
                 <h1 className="text-center text-xl font-bold">Trending Tags</h1>
                 <div className="flex flex-wrap">
-                    {this.getTrendingTags().map((tag) => (
+                    {this.tags.map((tag) => (
                     <Tag tagObject={tag} key={tag.tag} />
                     ))}
                 </div>

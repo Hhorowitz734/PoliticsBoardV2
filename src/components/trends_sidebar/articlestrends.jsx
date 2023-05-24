@@ -1,38 +1,54 @@
-import {React, Component} from 'react';
+import React, {Component} from 'react';
 
 
 //Class which is meant to represent each trending article
-//
-class ArticlesTrends extends Component {
+class Article extends Component {
 
-    getTrendingArticles() {
-        // Make logic here to get data from backend
-      
-        // This code is used for testing
-        const trendingArticles = [
-          { title: "Brazil's Hyperactive Population Strategies", author: "John Doe" },
-          { title: "Brazil's Hyperactive Population Strategies", author: "John Doe" },
-          { title: "Brazil's Hyperactive Population Strategies", author: "John Doe" },
-          { title: "Brazil's Hyperactive Population Strategies", author: "John Doe" },
-          { title: "Brazil's Hyperactive Population Strategies", author: "John Doe" }
-        ];
-      
-        // Generate HTML for each article
-        const articleElements = trendingArticles.map((article, index) => (
-          <div className="grid grid-cols-11 w-full h-14 hover:bg-gray-200 items-center cursor-pointer" key={index}>
+  constructor(props){
+      super(props);
+      this.articleObject = props.articleObject;
+      this.position = props.position;
+
+  }
+
+  render() {
+    return (
+      <div data-testid='trending-article-component' className="grid grid-cols-11 w-full h-14 hover:bg-gray-200 items-center cursor-pointer" key={this.position}>
             <div className="col-span-1">
-              <h1 className="text-2xl">{index + 1}</h1>
+              <h1 className="text-2xl">{this.position}</h1>
             </div>
             <div className="col-span-10 flex">
-              <h1 className="text-xl text-left">{article.title}</h1>
+              <h1 className="text-xl text-left">{this.articleObject.title}</h1>
               <h1 className="mx-1 font-bold">&middot;</h1>
-              <h1 className="mx-1 text-lg">{article.author}</h1>
+              <h1 className="mx-1 text-lg">{this.articleObject.author}</h1>
             </div>
           </div>
-        ));
-      
-        return articleElements;
-      }
+    )
+  }
+
+}
+
+
+
+class ArticlesTrends extends Component {
+
+  constructor(props){
+    super(props);
+
+    
+    //establishes a path for testing vs development (to be standardized later)
+    if (process.env.NODE_ENV === 'development') {
+      this.articles = [
+        {title: "Brazil's Hyperactive Population Strategies", author: "John Doe"},
+        {title: "Brazil's Hyperactive Population Strategies", author: "John Doe"},
+        {title: "Brazil's Hyperactive Population Strategies", author: "John Doe"},
+        {title: "Brazil's Hyperactive Population Strategies", author: "John Doe"},
+        {title: "Brazil's Hyperactive Population Strategies", author: "John Doe"}
+      ];
+    } else {
+      this.articles = props.articles; 
+    }
+  }
       
 
 
@@ -40,7 +56,9 @@ class ArticlesTrends extends Component {
         return(
             <div className="border border-t-transparent border-l-transparent border-r-transparent overflow-y-scroll h-fit max-h-[33vh]">
                 <h1 className="text-center text-xl font-bold ">Trending Articles</h1>
-                {this.getTrendingArticles()}
+                {this.articles.map((article, index) => (
+                    <Article articleObject={article} position={index + 1} />
+                ))}
             </div>
         )
     }
