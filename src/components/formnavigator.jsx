@@ -12,9 +12,12 @@ class FormPart extends Component{
 
     render(){
         return(
-            <div data-testid='form-navigator-component' className="w-full flex mt-8 h-16 items-center">
+            <div data-testid='form-navigator-component' className="w-full flex mt-8 h-16">
                 <div className="flex bg-blue-400 hover:bg-blue-600 transition duration-200 hover:text-opacity-70 h-12 w-12 rounded-3xl items-center justify-center text-xl text-white font-bold cursor-pointer">{this.number}</div>
-                <h1 className="text-white text-xl font-bold ml-4">{this.text}</h1>
+                <div className='flex flex-col'>
+                    <h1 className="text-white text-xl font-bold ml-4">{this.text}</h1>
+                    <h1 className="text-white text-sm ml-4 opacity-70 w-1/2">Give your article a title that captures your piece.</h1>
+                </div>
             </div>
         )
     }
