@@ -11,6 +11,8 @@
     "test": "jest --config jest.config.cjs"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^38.0.1",
+    "@ckeditor/ckeditor5-react": "^6.0.0",
     "autoprefixer": "^10.4.14",
     "jest-environment-jsdom": "^29.5.0",
     "postcss": "^8.4.23",
