@@ -1,7 +1,10 @@
 import React from "react";
 
 import Navbar from "../components/navbar";
-import FormNavigator from "../components/formnavigator";
+import FormNavigator from "../components/form_components/formnavigator";
+import NextButton from "../components/form_components/next_btn";
+
+import PageOne from "./form_minipages/page1";
 
 export default function Drafting(){
 
@@ -16,6 +19,7 @@ export default function Drafting(){
             <div className="flex-grow flex items-center justify-center">
                 <div className="w-[95%] h-[93%] grid grid-cols-3 mx-auto border rounded-xl shadow-lg">
                     <FormNavigator />
+                    <PageOne />
                 </div>
             </div>
         </div>
