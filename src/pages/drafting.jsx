@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useRef} from "react";
 
 import Navbar from "../components/navbar";
 import FormNavigator from "../components/form_components/formnavigator";
@@ -17,8 +17,11 @@ export default function Drafting(){
 
     const [pageLocation, setPageLocation] = useState(1)
 
+    const formNavigatorRef = React.createRef(); //REF TO CHANGE INTERNAL STATE OF FORM NAVIGATOR FROM THIS PAGE
+
     const handlePageLocationChange = (location) => {
         setPageLocation(location);
+        formNavigatorRef.current.setPage(location)
     }
 
     return (
@@ -26,10 +29,13 @@ export default function Drafting(){
             <Navbar />
             <div className="flex-grow flex items-center justify-center">
                 <div className="w-[95%] h-[93%] grid grid-cols-3 mx-auto border rounded-xl shadow-lg">
-                    <FormNavigator pageLocationCallback = {handlePageLocationChange} />
-                    {pageLocation === 1 && <PageOne />}
-                    {pageLocation === 2 && <PageTwo />}
-                    {pageLocation === 3 && <PageThree />}
+                    <FormNavigator 
+                        pageLocationCallback = {handlePageLocationChange}
+                        ref = {formNavigatorRef}
+                     />
+                    {pageLocation === 1 && <PageOne pageLocationCallback = {handlePageLocationChange}/>}
+                    {pageLocation === 2 && <PageTwo pageLocationCallback = {handlePageLocationChange}/>}
+                    {pageLocation === 3 && <PageThree pageLocationCallback = {handlePageLocationChange}/>}
                     {pageLocation === 4 && <PageFour />}
                 </div>
             </div>

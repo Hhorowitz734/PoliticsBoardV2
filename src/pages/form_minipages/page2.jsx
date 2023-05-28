@@ -4,7 +4,9 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
-function PageTwo() {
+function PageTwo({ pageLocationCallback }) {
+
+    const handlePageLocationChange = pageLocationCallback;
 
     const editorConfig = { //CONFIGURES EDITOR SETTINGS
         // CKEditor configuration options
@@ -27,7 +29,7 @@ function PageTwo() {
                     />
                 </div>
             </div>
-            <NextButton />
+            <NextButton currentPage = {2} handlePageLocationChange = {handlePageLocationChange}/>
         </div>
     )
 }
