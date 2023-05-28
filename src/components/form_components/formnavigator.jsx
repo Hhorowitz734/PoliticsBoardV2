@@ -7,11 +7,14 @@ class FormPart extends Component{
 
         this.number = props.number;
         this.text = props.text;
+        this.description = props.description;
         this.formCallBack = props.formCallBack; //Callback function which brings form back to intended state
         this.isSelected = props.isSelected; //Is this the currently selected section of the form
         this.state = {
             isSelected: this.isSelected
         }
+
+        this.setPageState = props.setPageCallback; //Callback to change form state
 
     }
 
@@ -19,7 +22,6 @@ class FormPart extends Component{
         if (prevProps.isSelected !== this.props.isSelected) {
           this.setState({ isSelected: this.props.isSelected });
         }
-        console.log(this.state.isSelected)
       }
 
 
@@ -29,10 +31,10 @@ class FormPart extends Component{
         
         return(
             <div data-testid='form-navigator-component' className={`w-10/12 flex mt-2 py-4 px-2 h-18 overflow-y-hidden rounded-xl ${isSelected ? 'bg-opacity-50 bg-[#4227B9]' : ''}`}>
-                <div className="flex bg-blue-400 hover:bg-blue-600 transition duration-200 hover:text-opacity-70 h-12 w-14 rounded-3xl items-center justify-center text-xl text-white font-bold cursor-pointer">{this.number}</div>
+                <div className="flex bg-blue-400 hover:bg-blue-600 transition duration-200 hover:text-opacity-70 h-12 w-14 rounded-3xl items-center justify-center text-xl text-white font-bold cursor-pointer" onClick={this.setPageState}>{this.number}</div>
                 <div className='flex flex-col'>
                     <h1 className="text-white text-xl font-bold ml-4">{this.text}</h1>
-                    <h1 className="text-white text-sm ml-4 opacity-70 w-3/4">Give your article a title that captures your piece.</h1>
+                    <h1 className="text-white text-sm ml-4 opacity-70 w-3/4">{this.description}</h1>
                 </div>
             </div>
         )
@@ -51,10 +53,10 @@ class FormNavigator extends Component {
       //Adds test cases to test Form with parts in test mode
       if (process.env.NODE_ENV === 'development') {
         this.form = [
-          { text: "Title", isCurrentPage: true },
-          { text: "Article", isCurrentPage: false },
-          { text: "Post Settings", isCurrentPage: false },
-          { text: "Rules", isCurrentPage: false }
+          { text: "Title", description: "Give your article a title that captures your piece.",  isCurrentPage: true },
+          { text: "Article", description: "Give your article a title that captures your piece.", isCurrentPage: false },
+          { text: "Post Settings", description: "Give your article a title that captures your piece.", isCurrentPage: false },
+          { text: "Rules", description: "Give your article a title that captures your piece.", isCurrentPage: false }
         ];
       } else {
         this.form = props.form;
@@ -63,6 +65,8 @@ class FormNavigator extends Component {
       this.state = {
         formParts: this.form
       };
+
+      this.pageLocationCallback = props.pageLocationCallback;
   
       this.formPartRefs = this.form.map(() => React.createRef());
       this.currentSelectedPage = 0;
@@ -80,27 +84,42 @@ class FormNavigator extends Component {
     }
   
     setNextPage() {
+        if (this.state.formParts[this.currentSelectedPage + 1]){ //Moves form to next page if a next page exists
+            const updatedFormParts = [...this.state.formParts];
+            updatedFormParts[this.currentSelectedPage].isCurrentPage = false;
+            this.currentSelectedPage += 1;
+            updatedFormParts[this.currentSelectedPage].isCurrentPage = true;
+            this.pageLocationCallback(this.currentSelectedPage);
+            this.setState({ formParts: updatedFormParts });
+        } else { //Handles submission if form complete
+            window.location = '/'
+        }
+    }
+
+    setPage(location) {
         const updatedFormParts = [...this.state.formParts];
         updatedFormParts[this.currentSelectedPage].isCurrentPage = false;
-        this.currentSelectedPage += 1;
+        this.currentSelectedPage = location - 1;
         updatedFormParts[this.currentSelectedPage].isCurrentPage = true;
-  
         this.setState({ formParts: updatedFormParts });
+        this.pageLocationCallback(location);
     }
   
     render() {
         const { formParts } = this.state;
       
         return (
-          <div className="flex flex-col col-span-1 m-3 rounded-xl pl-8" style={{ backgroundImage: `url(${this.form_progress_bg})` }} onClick={this.setNextPage}>
+          <div className="flex flex-col col-span-1 m-3 rounded-xl pl-8" style={{ backgroundImage: `url(${this.form_progress_bg})` }}>
             {formParts.map((formpart, index) => {
               const formPartRef = this.formPartRefs[index];
               return (
                 <FormPart
                   key={index}
                   text={formpart.text}
+                  description={formpart.description}
                   number={index + 1}
                   isSelected={formpart.isCurrentPage}
+                  setPageCallback = {() => this.setPage(index + 1)}
                   ref={formPartRef}
                 />
               );
