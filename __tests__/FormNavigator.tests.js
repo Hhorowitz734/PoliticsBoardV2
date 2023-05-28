@@ -7,10 +7,10 @@ describe('Tests FormNavigator Component functionality', () => {
     test('Renders form navigator for a sample form', () => {
   
         const testForm = [
-            {text: "Title"},
-            {text: "Article"},
-            {text: "Post Settings"},
-            {text: "Rules"}
+            {text: "Title", isCurrentPage: false},
+            {text: "Article", isCurrentPage: false},
+            {text: "Post Settings", isCurrentPage: false},
+            {text: "Rules", isCurrentPage: false}
         ];
   
         const { getAllByTestId } = render(<FormNavigator form = {testForm} />);
