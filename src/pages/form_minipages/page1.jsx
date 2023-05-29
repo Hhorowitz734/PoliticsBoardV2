@@ -20,7 +20,7 @@ function PageOne({ pageLocationCallback, formResults, setFormResults }) {
 
     return(
         <div className="flex flex-col col-span-2 items-center">
-            <h1 className="text-4xl text-center mt-8 font-bold">Title</h1>
+            <h1 className="text-6xl text-center mt-8 font-bold">Title</h1>
             <div className="flex flex-col w-full h-full items-center">
                 <input 
                     type='text' 
