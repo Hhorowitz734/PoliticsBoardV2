@@ -44,7 +44,7 @@ export default function Drafting(){
                     {pageLocation === 1 && <PageOne pageLocationCallback = {handlePageLocationChange} formResults = {formResults} setFormResults = {setFormResults} />}
                     {pageLocation === 2 && <PageTwo pageLocationCallback = {handlePageLocationChange} formResults = {formResults} setFormResults = {setFormResults}/>}
                     {pageLocation === 3 && <PageThree pageLocationCallback = {handlePageLocationChange} formResults = {formResults} setFormResults = {setFormResults}/>}
-                    {pageLocation === 4 && <PageFour />}
+                    {pageLocation === 4 && <PageFour formResults = {formResults} />}
                 </div>
             </div>
         </div>

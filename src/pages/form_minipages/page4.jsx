@@ -1,18 +1,20 @@
 import React from "react";
 import NextButton from "../../components/form_components/next_btn";
 
+import FormHandler from "../../components/formsubmithandler";
+
 function Rule({position, name, text}) { 
     
     return(
         <div data-testid='rule' class="p-4 mb-4 rounded-lg mt-4 border-b">
-            <h3 class="text-xl font-bold mb-2">Rule {position}: {name}</h3>
-            <p class="text-gray-700">{text}</p>
+            <h3 className="text-xl font-bold mb-2">Rule {position}: {name}</h3>
+            <p className="text-gray-700">{text}</p>
         </div>
 
     )
 }
 
-function PageFour({ rulesList }) {
+function PageFour({ rulesList, formResults }) {
     
     let rules;
 
@@ -75,7 +77,7 @@ function PageFour({ rulesList }) {
                 </div>
 
             </div>
-            <NextButton currentPage = {4} handlePageLocationChange = {() => {window.location = '/'}}/>
+            <NextButton currentPage = {4} handlePageLocationChange = {() => FormHandler(formResults)}/>
         </div>
     )
 }
