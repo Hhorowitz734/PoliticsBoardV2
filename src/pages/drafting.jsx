@@ -16,18 +16,19 @@ export default function Drafting(){
 
     const [pageLocation, setPageLocation] = useState(1)
 
-    const formNavigatorRef = React.createRef(); //REF TO CHANGE INTERNAL STATE OF FORM NAVIGATOR FROM THIS PAGE
+    const formNavigatorRef = useRef(null); //REF TO CHANGE INTERNAL STATE OF FORM NAVIGATOR FROM THIS PAGE
 
     const handlePageLocationChange = (location) => {
         setPageLocation(location);
         if (formNavigatorRef.current){
             formNavigatorRef.current.setPage(location, true);
         } 
-    }
+    } 
 
     //HANDLES COLLECTION FORM RESULTS
     const [formResults, setFormResults] = useState({
         title: '',
+        articleData: '',
     });
 
 
@@ -41,8 +42,8 @@ export default function Drafting(){
                         ref = {formNavigatorRef}
                      />
                     {pageLocation === 1 && <PageOne pageLocationCallback = {handlePageLocationChange} formResults = {formResults} setFormResults = {setFormResults} />}
-                    {pageLocation === 2 && <PageTwo pageLocationCallback = {handlePageLocationChange}/>}
-                    {pageLocation === 3 && <PageThree pageLocationCallback = {handlePageLocationChange}/>}
+                    {pageLocation === 2 && <PageTwo pageLocationCallback = {handlePageLocationChange} formResults = {formResults} setFormResults = {setFormResults}/>}
+                    {pageLocation === 3 && <PageThree pageLocationCallback = {handlePageLocationChange} formResults = {formResults} setFormResults = {setFormResults}/>}
                     {pageLocation === 4 && <PageFour />}
                 </div>
             </div>
