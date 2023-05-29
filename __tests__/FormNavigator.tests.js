@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import FormNavigator from '../src/components/formnavigator';
+import FormNavigator from '../src/components/form_components/formnavigator';
 
 describe('Tests FormNavigator Component functionality', () => {
 

@@ -58,7 +58,7 @@ class UsersTrends extends Component {
             <div className="mt-2 border border-b-transparent border-l-transparent border-r-transparent overflow-y-scroll h-fit max-h-[33vh]">
                 <h1 className="text-center text-xl font-bold">Trending Users</h1>
                 {this.usersTest.map((user, index) => (
-                    <User userObject={user} position={index + 1} />
+                    <User userObject={user} position={index + 1} key = {index} />
                 ))}
             </div>
         )

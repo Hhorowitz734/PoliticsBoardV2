@@ -57,7 +57,7 @@ class ArticlesTrends extends Component {
             <div className="border border-t-transparent border-l-transparent border-r-transparent overflow-y-scroll h-fit max-h-[33vh]">
                 <h1 className="text-center text-xl font-bold ">Trending Articles</h1>
                 {this.articles.map((article, index) => (
-                    <Article articleObject={article} position={index + 1} />
+                    <Article articleObject={article} position={index + 1} key = {index} />
                 ))}
             </div>
         )
