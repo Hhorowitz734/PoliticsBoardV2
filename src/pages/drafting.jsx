@@ -2,7 +2,6 @@ import React, {useState, useRef} from "react";
 
 import Navbar from "../components/navbar";
 import FormNavigator from "../components/form_components/formnavigator";
-import NextButton from "../components/form_components/next_btn";
 
 import PageOne from "./form_minipages/page1";
 import PageTwo from "./form_minipages/page2";
@@ -21,8 +20,16 @@ export default function Drafting(){
 
     const handlePageLocationChange = (location) => {
         setPageLocation(location);
-        formNavigatorRef.current.setPage(location)
+        if (formNavigatorRef.current){
+            formNavigatorRef.current.setPage(location, true);
+        } 
     }
+
+    //HANDLES COLLECTION FORM RESULTS
+    const [formResults, setFormResults] = useState({
+        title: '',
+    });
+
 
     return (
         <div className="flex flex-col w-full h-screen overflow-hidden">
@@ -33,7 +40,7 @@ export default function Drafting(){
                         pageLocationCallback = {handlePageLocationChange}
                         ref = {formNavigatorRef}
                      />
-                    {pageLocation === 1 && <PageOne pageLocationCallback = {handlePageLocationChange}/>}
+                    {pageLocation === 1 && <PageOne pageLocationCallback = {handlePageLocationChange} formResults = {formResults} setFormResults = {setFormResults} />}
                     {pageLocation === 2 && <PageTwo pageLocationCallback = {handlePageLocationChange}/>}
                     {pageLocation === 3 && <PageThree pageLocationCallback = {handlePageLocationChange}/>}
                     {pageLocation === 4 && <PageFour />}

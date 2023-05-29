@@ -11,7 +11,7 @@ class Navbar extends Component {
                     <span style={{ color: '#C62368' }}>Box</span>
                 </h1>
                 <div className="ml-auto hidden md:flex justify-between w-3/6">
-                    <h1 className="text-2xl cursor-pointer hover:text-gray-500 transition duration-300">Articles</h1>
+                    <h1 className="text-2xl cursor-pointer hover:text-gray-500 transition duration-300" onClick={() => window.location = '/'}>Articles</h1>
                     <h1 className="text-2xl cursor-pointer hover:text-gray-500 transition duration-300" onClick = {() => {window.location = '/write'}}>Write</h1>
                     <h1 className="text-2xl cursor-pointer hover:text-gray-500 transition duration-300 mr-8lg:mr-16">Log In</h1>
                 </div>

@@ -5,7 +5,6 @@ class NextButton extends Component {
     constructor( props ) {
         super(props)
 
-        console.log(props)
         this.page = props.currentPage;
         this.setPage = props.handlePageLocationChange;
 

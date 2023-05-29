@@ -96,13 +96,15 @@ class FormNavigator extends Component {
         }
     }
 
-    setPage(location) {
+    setPage(location, calledByCallback = false) {
         const updatedFormParts = [...this.state.formParts];
         updatedFormParts[this.currentSelectedPage].isCurrentPage = false;
         this.currentSelectedPage = location - 1;
         updatedFormParts[this.currentSelectedPage].isCurrentPage = true;
         this.setState({ formParts: updatedFormParts });
-        this.pageLocationCallback(location);
+        if (!calledByCallback) { //This prevents an infinite loop
+            this.pageLocationCallback(location);
+        }
     }
   
     render() {
