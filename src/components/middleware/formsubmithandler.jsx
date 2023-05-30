@@ -17,6 +17,8 @@ function FormHandler(formdata) {
         console.log(error);
     })
 
+    window.location = '/'; //Redirects user home
+
 }
 
 export default FormHandler;

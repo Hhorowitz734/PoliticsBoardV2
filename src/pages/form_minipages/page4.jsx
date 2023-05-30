@@ -1,7 +1,7 @@
 import React from "react";
 import NextButton from "../../components/form_components/next_btn";
 
-import FormHandler from "../../components/formsubmithandler";
+import FormHandler from "../../components/middleware/formsubmithandler";
 
 function Rule({position, name, text}) { 
     
