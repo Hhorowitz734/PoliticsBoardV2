@@ -25,13 +25,13 @@ app.post('/api/posts', (req, res) => { //REPLACE THIS WITH GET ALL POSTS FUNCTIO
     const postCollection = db.collection('posts');
 
     const ServerVars = {
-         userName: 'Anonymous',
-         userPic: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fencrypted-tbn1.gstatic.com%2Flicensed-image%3Fq%3Dtbn%3AANd9GcSvE0xxddDSqkbskSN7RVDSYcpTkG8-AcXVPIZqE8OhwVpDJ6h50hhBZTTnLXKLvJWBHtMeyw3AXsc5iqI&psig=AOvVaw1ylCRiobc-plMuIYZaYo4S&ust=1685474640982000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCOCbt7ugm_8CFQAAAAAdAAAAABAE',
-         userUrl: null,
-         articleUrl: null,
-         dateTimePosted: new Date().toISOString(), //Gets current datetime
-         affiliationScore: 0, //Tracks the poltical affiliation of the post from -1 to 1
-         likes: 0 //Amount of likes a post has
+        userName: req.body.anonymous ? 'Anonymous' : 'Unknown',
+        userPic: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fencrypted-tbn1.gstatic.com%2Flicensed-image%3Fq%3Dtbn%3AANd9GcSvE0xxddDSqkbskSN7RVDSYcpTkG8-AcXVPIZqE8OhwVpDJ6h50hhBZTTnLXKLvJWBHtMeyw3AXsc5iqI&psig=AOvVaw1ylCRiobc-plMuIYZaYo4S&ust=1685474640982000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCOCbt7ugm_8CFQAAAAAdAAAAABAE',
+        userUrl: null,
+        articleUrl: null,
+        dateTimePosted: new Date().toISOString(), //Gets current datetime
+        affiliationScore: 0, //Tracks the poltical affiliation of the post from -1 to 1
+        likes: 0 //Amount of likes a post has
     }
     const postData = { 
         ...ServerVars, //Variables built in automatically for post

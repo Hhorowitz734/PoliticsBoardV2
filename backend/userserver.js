@@ -2,6 +2,7 @@ import express from 'express';
 import { MongoClient } from 'mongodb';
 import cors from 'cors';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 const app = express();
 app.use(express.json());
@@ -48,8 +49,12 @@ app.post('/api/users', async (req, res) => {
 
     const usersCollection = db.collection('users');
     await usersCollection.insertOne(userData, (err, result) => {
-
-    });
+        if (err) {
+          res.json({ status: 'error', error: 'could not insert user' });
+          return;
+        }
+      });
+      
 
     res.json({status: 'ok'})
 

@@ -29,6 +29,7 @@ export default function Drafting(){
     const [formResults, setFormResults] = useState({
         title: '',
         articleData: '',
+        anonymous: false,
     });
 
 
