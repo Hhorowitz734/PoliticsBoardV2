@@ -30,7 +30,8 @@ app.post('/api/posts', (req, res) => { //REPLACE THIS WITH GET ALL POSTS FUNCTIO
          userUrl: null,
          articleUrl: null,
          dateTimePosted: new Date().toISOString(), //Gets current datetime
-         affiliationScore: 0 //Tracks the poltical affiliation of the post from -1 to 1
+         affiliationScore: 0, //Tracks the poltical affiliation of the post from -1 to 1
+         likes: 0 //Amount of likes a post has
     }
     const postData = { 
         ...ServerVars, //Variables built in automatically for post
@@ -46,24 +47,32 @@ app.post('/api/posts', (req, res) => { //REPLACE THIS WITH GET ALL POSTS FUNCTIO
 //Get method to retrieve articles
 app.get('/api/posts', async (req, res) => { //ADD METHODS FOR GET ALL, GET ONE, AND GET A FEW
   try {
-    const postsCollection = db.collection('posts');
-    const posts = await postsCollection.find({}).toArray();
-    res.json(posts);
+
+      const postsCollection = db.collection('posts');
+      const posts = await postsCollection.find({}).toArray();
+      res.json(posts);
+
   } catch (error) {
-    console.error('Error retrieving posts:', error);
-    res.status(500).json({ error: 'An error occurred while retrieving posts.' });
+
+      console.error('Error retrieving posts:', error);
+      res.status(500).json({ error: 'An error occurred while retrieving posts.' });
+
   }
 });
 
 //Delete method to delete articles
 app.delete('/api/posts', async (req, res) => { //ADD METHODS FOR DELETE ONE, DELETE ALL
   try {
-    const postsCollection = db.collection('posts');
-    const deleteResult = await postsCollection.deleteMany({});
-    res.json({ deletedCount: deleteResult.deletedCount });
+
+      const postsCollection = db.collection('posts');
+      const deleteResult = await postsCollection.deleteMany({});
+      res.json({ deletedCount: deleteResult.deletedCount });
+      
   } catch (error) {
-    console.error('Error clearing posts collection:', error);
-    res.status(500).json({ error: 'An error occurred while clearing posts collection.' });
+
+      console.error('Error clearing posts collection:', error);
+      res.status(500).json({ error: 'An error occurred while clearing posts collection.' });
+
   }
 });
 
