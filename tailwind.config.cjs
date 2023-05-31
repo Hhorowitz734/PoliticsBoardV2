@@ -12,6 +12,9 @@ export default {
         keppel: '#44BBA4'
       }
     },
+      ringColor: {
+        'soapblue': '#3200FF'
+      }
   },
   plugins: [
     require('tailwindcss-font-inter'),

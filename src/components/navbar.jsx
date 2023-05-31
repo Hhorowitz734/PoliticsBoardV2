@@ -13,7 +13,7 @@ class Navbar extends Component {
                 <div className="ml-auto hidden md:flex justify-between w-3/6">
                     <h1 className="text-2xl cursor-pointer hover:text-gray-500 transition duration-300" onClick={() => window.location = '/'}>Articles</h1>
                     <h1 className="text-2xl cursor-pointer hover:text-gray-500 transition duration-300" onClick = {() => {window.location = '/write'}}>Write</h1>
-                    <h1 className="text-2xl cursor-pointer hover:text-gray-500 transition duration-300 mr-8lg:mr-16">Log In</h1>
+                    <h1 className="text-2xl cursor-pointer hover:text-gray-500 transition duration-300 mr-8lg:mr-16" onClick = {() => {window.location = '/login'}}>Log In</h1>
                 </div>
             </div>
         )
