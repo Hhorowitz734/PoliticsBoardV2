@@ -40,7 +40,7 @@ app.post('/api/users', async (req, res) => {
     const userData = {
         name: name,
         email: email,
-        password: password,
+        password: hash,
         ...serverData,
     }
 
@@ -83,7 +83,7 @@ app.delete('/api/users', async (req, res) => {
 
       console.error('Error clearing users collection:', error);
       res.status(500).json({ error: 'An error occurred while clearing users collection.' });
-      
+
     }
   });
   

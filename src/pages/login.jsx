@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 
 import Navbar from "../components/navbar";
 
+import UserFormSubmitHandler from '../components/middleware/userformsubmithandler';
+
 
 //Page to sign in or register for SoapBox
 function AccountEntryPage () {
@@ -32,7 +34,7 @@ function AccountEntryPage () {
                         <h1 for='email' className='text-2xl mt-1 mr-4 mb-2 font-bold'>Email:</h1><input type="email" id="email" name="email" class="w-1/4 border focus:ring focus:ring-opacity-50 ring-soapblue rounded-lg p-2" onChange = {(e) => setEmail(e.target.value)}></input>
                         <h1 for='email' className={`text-2xl mt-1 mr-4 mb-2 font-bold ${loginToggler ? 'hidden' : ''}`}>Name:</h1><input type="text" id="name" name="name" class={`w-1/4 border focus:ring focus:ring-opacity-50 ring-soapblue rounded-lg p-2 ${loginToggler ? 'hidden' : ''}`} onChange = {(e) => setName(e.target.value)}></input>
                         <h1 for='password' className='text-2xl mt-1 mr-4 mb-2 font-bold'>Password:</h1><input type="password" id="password" name="password" class="w-1/4 border focus:ring focus:ring-opacity-50 ring-soapblue rounded-lg p-2" onChange = {(e) => setPassword(e.target.value)}></input>
-                        <div className='mt-auto w-24 text-center text-white text-2xl font-bold items-center justify-center flex rounded-lg h-12 bg-[#3200FF] hover:bg-red-500 cursor-pointer transition duration-200'>Submit</div>
+                        <div className='mt-auto w-24 text-center text-white text-2xl font-bold items-center justify-center flex rounded-lg h-12 bg-[#3200FF] hover:bg-red-500 cursor-pointer transition duration-200' onClick = {() => UserFormSubmitHandler(loginToggler, {name: name, email: email, password: password})}>Submit</div>
                     </div>
                 </div>
             </div>
