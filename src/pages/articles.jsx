@@ -6,14 +6,13 @@ import FeedRetriever from '../components/middleware/feedretriever';
 
 import Verifier from '../components/middleware/verifier';
 
-Verifier();
-
 
 export default function Articles() {
     
     const [feed, setFeed] = useState([]);
+    const [user, setUser] = useState(null);
 
-    useEffect(() => {
+    useEffect(() => { //Hook to get feed on page load
         async function fetchFeed() {
           try {
             const retrievedFeed = await FeedRetriever();
@@ -24,6 +23,19 @@ export default function Articles() {
         }
       
         fetchFeed();
+      }, []);
+
+    useEffect(() => { //UseEffect hook to get user object
+        async function fetchUser() {
+          try {
+            const userobj = await Verifier();
+            setUser(userobj);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      
+        fetchUser();
       }, []);
       
 

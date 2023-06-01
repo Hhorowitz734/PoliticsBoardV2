@@ -36,7 +36,8 @@ app.post('/api/users', async (req, res) => {
 
 
     const serverData = { //Any data other than name, password, and email that needs to be set for a user
-        posts: []
+        posts: [],
+        pfp: 'https://cdn.britannica.com/71/234471-050-093F4211/shiba-inu-dog-in-the-snow.jpg'
     }
 
     const userData = {
@@ -69,7 +70,7 @@ app.get('/api/users', async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: 'User not found.' });
     }
-    
+
     res.json(user);
 
   } catch (error) {

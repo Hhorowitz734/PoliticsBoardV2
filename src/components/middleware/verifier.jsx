@@ -18,22 +18,17 @@ function Verifier(setUserState) {
     //DECRYPT COOKIE HERE
 
     //Part 3 --> Sets userState to usercookie
-    fetch('http://localhost:3002/api/users', {
+    return fetch(`http://localhost:3002/api/users?_id=${userKey}`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(userData),
         })
         .then((response) => response.json())
-        .then((data) => {
-            const encodedValue = encodeURIComponent(data.insertedId.toString()); 
-            document.cookie = `userCookie=${encodedValue}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; secure; SameSite=Strict;`;
-        })
         .catch((error) => {
-            console.log(error);
-    })
-
+        console.log(error);
+        throw error;
+        });
 }
 
 export default Verifier;
