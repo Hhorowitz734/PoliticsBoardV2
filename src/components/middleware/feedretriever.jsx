@@ -1,7 +1,7 @@
 
 
 function FeedRetriever() {
-    return fetch('http://localhost:3002/api/posts', {
+    return fetch('http://localhost:3003/api/posts', {
         method: 'GET',
         headers: {
         'Content-Type': 'application/json',

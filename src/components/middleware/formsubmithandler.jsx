@@ -2,7 +2,7 @@
 
 function FormHandler(formdata) {
 
-    fetch('http://localhost:3002/api/posts', {
+    fetch('http://localhost:3003/api/posts', {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'

@@ -1,4 +1,4 @@
-import React, {useState, useRef} from "react";
+import React, {useState, useRef, useEffect} from "react";
 
 import Navbar from "../components/navbar";
 import FormNavigator from "../components/form_components/formnavigator";
@@ -7,6 +7,8 @@ import PageOne from "./form_minipages/page1";
 import PageTwo from "./form_minipages/page2";
 import PageThree from "./form_minipages/page3";
 import PageFour from "./form_minipages/page4";
+
+import Verifier from "../components/middleware/verifier";
 
 export default function Drafting(){
 
@@ -30,7 +32,25 @@ export default function Drafting(){
         title: '',
         articleData: '',
         anonymous: false,
+        userObject: null,
     });
+
+    useEffect(() => { //Sets User Object in form results
+        async function fetchUser() {
+          try {
+            const userobj = await Verifier();
+            const modifiedFormData = { ...formResults };
+            modifiedFormData.userObject = userobj;
+            setFormResults(modifiedFormData);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      
+        if (!formResults.userObject) {
+            fetchUser();
+        }
+      }, []);
 
 
     return (

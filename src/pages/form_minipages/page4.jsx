@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import NextButton from "../../components/form_components/next_btn";
 
 import FormHandler from "../../components/middleware/formsubmithandler";
@@ -6,7 +6,7 @@ import FormHandler from "../../components/middleware/formsubmithandler";
 function Rule({position, name, text}) { 
     
     return(
-        <div data-testid='rule' class="p-4 mb-4 rounded-lg mt-4 border-b">
+        <div data-testid='rule' className="p-4 mb-4 rounded-lg mt-4 border-b">
             <h3 className="text-xl font-bold mb-2">Rule {position}: {name}</h3>
             <p className="text-gray-700">{text}</p>
         </div>
@@ -14,7 +14,7 @@ function Rule({position, name, text}) {
     )
 }
 
-function PageFour({ rulesList, formResults }) {
+function PageFour({ rulesList, formResults}) {
     
     let rules;
 

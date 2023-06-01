@@ -11,7 +11,9 @@ class ArticleCard extends Component {
         this.article = props.articleObject.articleData;
         this.date = new Date(props.articleObject.dateTimePosted).toLocaleDateString();
         this.name = props.articleObject.userName;
-        this.pfp = props.articleObject.userPic;
+        this.user = {
+            pfp: props.articleObject.userPic,
+        }
     }
 
     render () {
@@ -24,15 +26,15 @@ class ArticleCard extends Component {
                         <BiShare className="m-2 mt-5 text-xl font-thin"/>
                     </div>
                     <div className="flex items-center">
-                    <img src={"https://cdn.britannica.com/71/234471-050-093F4211/shiba-inu-dog-in-the-snow.jpg"} alt="Your image" className="h-8 mr-1 rounded-full" style={{ borderRadius: "50%" }} />
+                    <img src={this.user.pfp} alt="Your image" className="h-8 mr-1 rounded-full" style={{ borderRadius: "50%" }} />
                         <h1 className="m-2 font-bold">&middot;</h1>
                         <h1 className="mt-2 font-bold">{this.name}</h1>
                         <h1 className="m-2 font-bold">&middot;</h1>
                         <h1 className="mt-2">{this.date}</h1>
                         <h1 className="m-2 font-bold">&middot;</h1>
                         <div className="hidden md:flex">
-                            <div className="bg-gray-300 border-transparent rounded-md h-1/2 px-2 cursor-pointer hover:bg-gray-500 transition duration-300 mb-2 lg:mb-0 lg:mr-2"><h1>Transgender</h1></div>
-                            <div className="bg-gray-300 border-transparent rounded-md h-1/2 px-2 cursor-pointer hover:bg-gray-500 transition duration-300 mb-2 lg:mb-0 lg:mr-2"><h1>Civil Rights</h1></div>
+                            <div className="bg-gray-300 border-transparent rounded-md h-1/2 px-2 cursor-pointer hover:bg-gray-500 transition duration-300 mb-2 lg:mb-0 lg:mr-2 mr-1"><h1>Transgender</h1></div>
+                            <div className="bg-gray-300 border-transparent rounded-md h-1/2 px-2 cursor-pointer hover:bg-gray-500 transition duration-300 mb-2 lg:mb-0 lg:mr-2 mr-1"><h1>Civil Rights</h1></div>
                             <div className="bg-gray-300 border-transparent rounded-md h-1/2 px-2 cursor-pointer hover:bg-gray-500 transition duration-300 mb-2 lg:mb-0"><h1>Dogknob</h1></div>
                         </div>
                     </div>
@@ -41,7 +43,7 @@ class ArticleCard extends Component {
                         <div className="mx-1 w-fit bg-gray-300 border-transparent rounded-md h-1/2 px-2 cursor-pointer hover:bg-gray-500 transition duration-300 mb-2 lg:mb-0 lg:mr-2"><h1>Civil Rights</h1></div>
                         <div className="mx-1 w-fit bg-gray-300 border-transparent rounded-md h-1/2 px-2 cursor-pointer hover:bg-gray-500 transition duration-300 mb-2 lg:mb-0"><h1>Dogknob</h1></div>
                     </div>
-                    <h1>{this.article}</h1>
+                    <h1 className = 'overflow-y-hidden' dangerouslySetInnerHTML={{__html: this.article}}></h1>
                 </div>
             </div>
         )

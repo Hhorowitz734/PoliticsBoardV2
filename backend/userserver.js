@@ -68,7 +68,7 @@ app.get('/api/users', async (req, res) => {
     const user = await usersCollection.findOne({ _id: new ObjectId(_id) }); // Convert _id to ObjectId
 
     if (!user) {
-      return res.status(404).json({ error: 'User not found.' });
+      return res.status(404).json(null);
     }
 
     res.json(user);
