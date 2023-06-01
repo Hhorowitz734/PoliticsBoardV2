@@ -1,5 +1,5 @@
 import express from 'express';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import cors from 'cors';
 
 const app = express();
@@ -21,7 +21,7 @@ console.log('Connected to mongoDB server.');
 const db = client.db(dbName);
 
 //Post method for creating articles
-app.post('/api/posts', (req, res) => { //REPLACE THIS WITH GET ALL POSTS FUNCTION
+app.post('/api/posts', async (req, res) => { //REPLACE THIS WITH GET ALL POSTS FUNCTION
     const postCollection = db.collection('posts');
 
     const post = req.body;
@@ -31,7 +31,6 @@ app.post('/api/posts', (req, res) => { //REPLACE THIS WITH GET ALL POSTS FUNCTIO
         userName: req.body.anonymous ? 'Anonymous' : user.name,
         userPic: req.body.anonymous ? 'https://cdn1.iconfinder.com/data/icons/social-black-buttons/512/anonymous-512.png' : user.pfp,
         userUrl: null,
-        articleUrl: null,
         dateTimePosted: new Date().toISOString(), //Gets current datetime
         affiliationScore: 0, //Tracks the poltical affiliation of the post from -1 to 1
         likes: 0 //Amount of likes a post has
@@ -42,9 +41,7 @@ app.post('/api/posts', (req, res) => { //REPLACE THIS WITH GET ALL POSTS FUNCTIO
     }
 
     
-
-    postCollection.insertOne(postData, (err, result) => {
-    });
+    await postCollection.insertOne(postData);
 });
 
 //Get method to retrieve articles
@@ -62,6 +59,25 @@ app.get('/api/posts', async (req, res) => { //ADD METHODS FOR GET ALL, GET ONE, 
 
   }
 });
+
+//Get request to get one post by its id
+app.get('/api/posts/viewone/:id', async (req, res) => {
+    try {
+      const postId = req.params.id;
+      const postsCollection = db.collection('posts');
+      const post = await postsCollection.findOne({ _id: new ObjectId(postId) });
+  
+      if (post) {
+        res.json(post);
+      } else {
+        res.status(404).json({ error: 'Post not found.' });
+      }
+    } catch (error) {
+      console.error('Error retrieving post:', error);
+      res.status(500).json({ error: 'An error occurred while retrieving the post.' });
+    }
+  });
+
 
 //Delete method to delete articles
 app.delete('/api/posts', async (req, res) => { //ADD METHODS FOR DELETE ONE, DELETE ALL
