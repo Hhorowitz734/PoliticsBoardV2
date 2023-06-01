@@ -12,14 +12,15 @@ function UserFormSubmitHandler(loginBool, userData) {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
+            const encodedValue = encodeURIComponent(data.insertedId.toString()); 
+            document.cookie = `userCookie=${encodedValue}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/; secure; SameSite=Strict;`;
         })
         .catch((error) => {
             console.log(error);
         })
     }
 
-    window.location = '/'; //Redirects user home
+    //window.location = '/'; //Redirects user home
 
 }
 

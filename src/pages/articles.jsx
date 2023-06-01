@@ -4,6 +4,10 @@ import Navbar from "../components/navbar";
 import TrendsBar from "../components/trends_sidebar/trendsbar";
 import FeedRetriever from '../components/middleware/feedretriever';
 
+import Verifier from '../components/middleware/verifier';
+
+Verifier();
+
 
 export default function Articles() {
     

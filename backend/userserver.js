@@ -1,8 +1,8 @@
 import express from 'express';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import cors from 'cors';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+
 
 const app = express();
 app.use(express.json());
@@ -21,6 +21,7 @@ client.connect((err) => {
     return;
 })
 console.log('Connected to mongoDB server.');
+
 
 app.post('/api/users', async (req, res) => { 
 
@@ -50,28 +51,35 @@ app.post('/api/users', async (req, res) => {
     const usersCollection = db.collection('users');
     const result = await usersCollection.insertOne(userData);
 
-    const idSalt = await bcrypt.genSalt(10);
-    const encryptedInsertedId = await bcrypt.hash(result.insertedId.toString(), idSalt); //THIS METHOD MAY NOT WORK
+    const encryptedInsertedId = result.insertedId.toString() //IN THE FUTURE ENCRYPT THIS
 
     res.json({insertedId: encryptedInsertedId}); //now, decrypt this in the frontend and use it to manage state by saving the user object as a setstate
     
 });
 
-//Get method to retrieve users
-app.get('/api/users', async (req, res) => { //ADD METHODS FOR GET ALL, GET ONE, AND GET A FEW
-  try {
 
-      const usersCollection = db.collection('users');
-      const users = await usersCollection.find({}).toArray();
-      res.json(users);
+
+app.get('/api/users', async (req, res) => {
+  try {
+    const { _id } = req.query; // Extract the _id from the query parameters
+
+    const usersCollection = db.collection('users');
+    const user = await usersCollection.findOne({ _id: new ObjectId(_id) }); // Convert _id to ObjectId
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+    
+    res.json(user);
 
   } catch (error) {
-
-      console.error('Error retrieving useres:', error);
-      res.status(500).json({ error: 'An error occurred while retrieving users.' });
-
+    console.error('Error retrieving user:', error);
+    res.status(500).json({ error: 'An error occurred while retrieving the user.' });
   }
 });
+
+  
+  
 
 app.delete('/api/users', async (req, res) => {
 
