@@ -48,16 +48,13 @@ app.post('/api/users', async (req, res) => {
     //Part 2 --> Submitting user data to the database
 
     const usersCollection = db.collection('users');
-    await usersCollection.insertOne(userData, (err, result) => {
-        if (err) {
-          res.json({ status: 'error', error: 'could not insert user' });
-          return;
-        }
-      });
-      
+    const result = await usersCollection.insertOne(userData);
 
-    res.json({status: 'ok'})
+    const idSalt = await bcrypt.genSalt(10);
+    const encryptedInsertedId = await bcrypt.hash(result.insertedId.toString(), idSalt); //THIS METHOD MAY NOT WORK
 
+    res.json({insertedId: encryptedInsertedId}); //now, decrypt this in the frontend and use it to manage state by saving the user object as a setstate
+    
 });
 
 //Get method to retrieve users
