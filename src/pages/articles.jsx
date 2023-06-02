@@ -16,7 +16,7 @@ export default function Articles() {
         async function fetchFeed() {
           try {
             const retrievedFeed = await FeedRetriever();
-            setFeed(retrievedFeed);
+            setFeed(retrievedFeed.reverse());
           } catch (error) {
             console.log(error);
           }

@@ -37,7 +37,7 @@ app.post('/api/users', async (req, res) => {
 
     const serverData = { //Any data other than name, password, and email that needs to be set for a user
         posts: [],
-        pfp: 'https://cdn.britannica.com/71/234471-050-093F4211/shiba-inu-dog-in-the-snow.jpg'
+        pfp: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Taka_Shiba.jpg/1200px-Taka_Shiba.jpg'
     }
 
     const userData = {

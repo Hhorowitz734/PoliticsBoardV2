@@ -25,6 +25,14 @@ class Navbar extends Component {
             console.log(error);
         }
     }
+
+    directProfileBtnClick(user) {
+        if (!user) {
+            window.location = '/login'
+        } else {
+            window.location = `/user/${user._id}` //Directs user to user profile page if it exists
+        }
+    }
     
     render() {
 
@@ -39,7 +47,13 @@ class Navbar extends Component {
                 <div className="ml-auto hidden md:flex justify-between w-3/6">
                     <h1 className="text-2xl cursor-pointer hover:text-gray-500 transition duration-300" onClick={() => window.location = '/'}>Articles</h1>
                     <h1 className="text-2xl cursor-pointer hover:text-gray-500 transition duration-300" onClick = {() => {window.location = '/write'}}>Write</h1>
-                    <h1 className="text-2xl cursor-pointer hover:text-gray-500 transition duration-300 mr-8 lg:mr-16" onClick = {() => {window.location = '/login'}}>{user ? user.name : 'Log In'}</h1>
+                    <div className='flex mr-8 lg:mr-16'>
+                        <h1 className={`${user ? 'font-bold' : ''} text-2xl cursor-pointer hover:text-gray-500 transition duration-300`} 
+                            onClick = {() => {this.directProfileBtnClick(user)}}>
+                                {user ? user.name : 'Log In'}
+                        </h1>
+                        {user && <img src={user.pfp} alt="Your image" className="h-8 ml-2 rounded-full" style={{ borderRadius: "50%" }} />}
+                    </div>
                 </div>
             </div>
         )

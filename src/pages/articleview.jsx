@@ -28,7 +28,6 @@ class ViewArticle extends Component{
     render() {
 
         const {article} = this.state;
-        console.log(article)
 
         return(
             <div className="flex flex-col min-h-screen bg-white">

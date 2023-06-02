@@ -11,6 +11,7 @@ import Articles from './pages/articles'
 import Drafting from "./pages/drafting";
 import AccountEntryPage from "./pages/login";
 import ViewArticle from "./pages/articleview";
+import Profile from "./pages/profile";
 
 const ViewArticleWrapper = () => { //Handles dynamic article page generation
   const match = useMatch('/article/:articleID');
@@ -19,6 +20,12 @@ const ViewArticleWrapper = () => { //Handles dynamic article page generation
   return <ViewArticle articleId={articleId} />;
 };
 
+const ProfileWrapper = () => { //Handles dynamic user profile page generation
+  const match = useMatch('/user/:userID');
+  const userId = match?.params?.userID;
+
+  return <Profile userId={userId} />;
+};
 
 function App() {
 
@@ -38,6 +45,10 @@ function App() {
     {
       path: '/article/:articleID',
       element: <ViewArticleWrapper />
+    },
+    {
+      path: '/user/:userID',
+      element: <ProfileWrapper />
     }
   ]);
 

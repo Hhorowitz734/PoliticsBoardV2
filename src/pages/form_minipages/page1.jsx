@@ -20,11 +20,11 @@ function PageOne({ pageLocationCallback, formResults, setFormResults }) {
 
     return(
         <div className="flex flex-col col-span-2 items-center">
-            <h1 className="text-6xl text-center mt-8 font-bold">Title</h1>
-            <div className="flex flex-col w-full h-full items-center">
+            <div className="flex flex-col w-full h-full items-center justify-center">
+                <h1 className="text-6xl text-center font-bold">Title</h1>
                 <input 
                     type='text' 
-                    className="h-16 w-8/12 mt-24 border-b-2 border-black text-center text-black focus:text-white hover:text-white text-6xl rounded-xl outline-none hover:bg-[#5709DA] hover:bg-opacity-50 focus:bg-[#5709DA] focus:bg-opacity-100 transition duration-300"
+                    className="h-16 w-8/12 border-2 text-center text-black focus:text-white hover:text-white text-2xl rounded-xl outline-none hover:bg-[#5e21ff]  hover:bg-opacity-50 focus:bg-[#5e21ff] focus:bg-opacity-65 transition duration-300"
                     value = {title}
                     onChange = {handleTitleChange}
                     />
