@@ -30,7 +30,7 @@ app.post('/api/posts', async (req, res) => { //REPLACE THIS WITH GET ALL POSTS F
     const ServerVars = {
         userName: req.body.anonymous ? 'Anonymous' : user.name,
         userPic: req.body.anonymous ? 'https://cdn1.iconfinder.com/data/icons/social-black-buttons/512/anonymous-512.png' : user.pfp,
-        userUrl: null,
+        userId: req.body.anonymous ? null : user._id,
         dateTimePosted: new Date().toISOString(), //Gets current datetime
         affiliationScore: 0, //Tracks the poltical affiliation of the post from -1 to 1
         likes: 0 //Amount of likes a post has
@@ -77,6 +77,22 @@ app.get('/api/posts/viewone/:id', async (req, res) => {
       res.status(500).json({ error: 'An error occurred while retrieving the post.' });
     }
   });
+
+
+//Get request for posts by a specific user
+app.get('/api/posts/viewuserposts/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const postsCollection = db.collection('posts');
+    const posts = await postsCollection.find({ userId : userId }).toArray();
+
+    res.json(posts);
+
+  } catch (error) {
+    console.error('Error retrieving post:', error);
+    res.status(500).json({ error: 'An error occurred while retrieving the post.' });
+  }
+});
 
 
 //Delete method to delete articles
