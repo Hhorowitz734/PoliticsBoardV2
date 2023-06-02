@@ -58,6 +58,32 @@ app.post('/api/users', async (req, res) => {
     
 });
 
+app.post('/api/users/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const usersCollection = db.collection('users');
+    const user = await usersCollection.findOne({ email: email });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ error: 'Invalid password.' });
+    }
+
+    res.json({ status: 'ok', userId: user._id }); // Return the user ID to the frontend for further authentication or state management
+
+  } catch (error) {
+    console.error('Error logging in:', error);
+    res.status(500).json({ error: 'An error occurred while logging in.' });
+  }
+});
+
+
 
 
 app.get('/api/users', async (req, res) => {
