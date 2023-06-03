@@ -47,9 +47,9 @@ class Navbar extends Component {
                 <div className="ml-auto hidden md:flex justify-between w-3/6">
                     <h1 className="text-2xl cursor-pointer hover:text-gray-500 transition duration-300" onClick={() => window.location = '/'}>Articles</h1>
                     <h1 className="text-2xl cursor-pointer hover:text-gray-500 transition duration-300" onClick = {() => {window.location = '/write'}}>Write</h1>
-                    <div className='flex mr-8 lg:mr-16'>
-                        <h1 className={`${user ? 'font-bold' : ''} text-2xl cursor-pointer hover:text-gray-500 transition duration-300`} 
-                            onClick = {() => {this.directProfileBtnClick(user)}}>
+                    <div className='flex mr-8 lg:mr-16 cursor-pointer'
+                    onClick = {() => {this.directProfileBtnClick(user)}}>
+                        <h1 className={`${user ? 'font-bold' : ''} text-2xl  hover:text-gray-500 transition duration-300`} >
                                 {user ? user.name : 'Log In'}
                         </h1>
                         {user && <img src={user.pfp} alt="Your image" className="h-8 ml-2 rounded-full" style={{ borderRadius: "50%" }} />}

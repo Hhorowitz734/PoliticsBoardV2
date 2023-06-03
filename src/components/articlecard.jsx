@@ -2,6 +2,8 @@ import {React, Component} from 'react';
 import {AiOutlineHeart} from "react-icons/ai"
 import {BiShare} from "react-icons/bi"
 
+import Tag from './tag';
+
 class ArticleCard extends Component {
 
     constructor(props) {
@@ -35,15 +37,15 @@ class ArticleCard extends Component {
                         <h1 className="mt-2">{this.date}</h1>
                         <h1 className="m-2 font-bold">&middot;</h1>
                         <div className="hidden md:flex">
-                            <div className="bg-gray-300 border-transparent rounded-md h-1/2 px-2 cursor-pointer hover:bg-gray-500 transition duration-300 mb-2 lg:mb-0 lg:mr-2 mr-1"><h1>Transgender</h1></div>
-                            <div className="bg-gray-300 border-transparent rounded-md h-1/2 px-2 cursor-pointer hover:bg-gray-500 transition duration-300 mb-2 lg:mb-0 lg:mr-2 mr-1"><h1>Civil Rights</h1></div>
-                            <div className="bg-gray-300 border-transparent rounded-md h-1/2 px-2 cursor-pointer hover:bg-gray-500 transition duration-300 mb-2 lg:mb-0"><h1>Dogknob</h1></div>
+                           <Tag />
+                           <Tag />
+                           <Tag />
                         </div>
                     </div>
                     <div className="flex flex-wrap md:hidden lg:m-0 my-2">
-                        <div className="mx-1 w-fit bg-gray-300 border-transparent rounded-md h-1/2 px-2 cursor-pointer hover:bg-gray-500 transition duration-300 mb-2 lg:mb-0 lg:mr-2"><h1>Transgender</h1></div>
-                        <div className="mx-1 w-fit bg-gray-300 border-transparent rounded-md h-1/2 px-2 cursor-pointer hover:bg-gray-500 transition duration-300 mb-2 lg:mb-0 lg:mr-2"><h1>Civil Rights</h1></div>
-                        <div className="mx-1 w-fit bg-gray-300 border-transparent rounded-md h-1/2 px-2 cursor-pointer hover:bg-gray-500 transition duration-300 mb-2 lg:mb-0"><h1>Dogknob</h1></div>
+                        <Tag />
+                        <Tag />
+                        <Tag />
                     </div>
                     <h1 className = 'overflow-y-hidden' dangerouslySetInnerHTML={{__html: this.article}}></h1>
                 </div>
