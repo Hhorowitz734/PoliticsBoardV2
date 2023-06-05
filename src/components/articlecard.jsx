@@ -17,11 +17,7 @@ class ArticleCard extends Component {
         this.user = {
             pfp: props.articleObject.userPic,
         }
-
-
-        //REMOVE LATER
-        this.tagObjectTemp = {topic: 'Tag', color: `rgba(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, `}
-        //REMOVE LATER
+        this.tags = props.articleObject.tags;
     }
 
     render () {
@@ -42,15 +38,15 @@ class ArticleCard extends Component {
                         <h1 className="mt-2">{this.date}</h1>
                         <h1 className="m-2 font-bold">&middot;</h1>
                         <div className="hidden md:flex">
-                           <Tag tagObject = {this.tagObjectTemp} />
-                           <Tag tagObject = {this.tagObjectTemp} />
-                           <Tag tagObject = {this.tagObjectTemp} />
+                           {this.tags && this.tags.length > 0 && (
+                                this.tags.map((tag, index) => <Tag tagObject = {tag} key={index} />)
+                           )}
                         </div>
                     </div>
                     <div className="flex flex-wrap md:hidden lg:m-0 my-2">
-                        <Tag tagObject = {this.tagObjectTemp} />
-                        <Tag tagObject = {this.tagObjectTemp} />
-                        <Tag tagObject = {this.tagObjectTemp} />
+                        {this.tags && this.tags.length > 0 && (
+                            this.tags.map((tag, index) => <Tag tagObject = {tag} key={index} />)
+                        )}
                     </div>
                     <h1 className = 'overflow-y-hidden' dangerouslySetInnerHTML={{__html: this.article}}></h1>
                 </div>

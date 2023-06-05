@@ -41,7 +41,9 @@ app.post('/api/posts', async (req, res) => { //REPLACE THIS WITH GET ALL POSTS F
     }
 
     
-    await postCollection.insertOne(postData);
+    const result = await postCollection.insertOne(postData);
+
+    res.json(result.insertedId); //Returns id of post
 });
 
 //Get method to retrieve articles

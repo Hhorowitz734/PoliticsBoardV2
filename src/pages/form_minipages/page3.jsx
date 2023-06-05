@@ -9,10 +9,12 @@ function PageThree({ pageLocationCallback, formResults, setFormResults }) {
     const handlePageLocationChange = pageLocationCallback;
 
     const anonToggleRef = useRef(null);
+    const tagAdderRef = useRef(null);
 
     const handleNextPage = (page) => { //Modified function to first get toggle states
         const modifiedFormData = { ...formResults };
         modifiedFormData.anonymous = anonToggleRef.current.state.toggled;
+        modifiedFormData.tags = tagAdderRef.current.state.selectedTags;
         setFormResults(modifiedFormData);
         handlePageLocationChange(page);
     }
@@ -24,7 +26,7 @@ function PageThree({ pageLocationCallback, formResults, setFormResults }) {
             <h1 className="text-6xl text-center mt-8 font-bold">Settings</h1>
             <div className="w-full flex flex-col mt-8 items-center">
                 <Toggle ref = {anonToggleRef} />
-                <TagAdder />
+                <TagAdder ref = {tagAdderRef} />
             </div>
             
             <NextButton currentPage = {3} handlePageLocationChange = {handleNextPage}/>

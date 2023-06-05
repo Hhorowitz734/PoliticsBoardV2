@@ -32,6 +32,7 @@ export default function Drafting(){
         title: '',
         articleData: '',
         anonymous: false,
+        tags: [],
         userObject: null,
     });
 

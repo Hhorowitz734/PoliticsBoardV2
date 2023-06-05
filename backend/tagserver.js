@@ -34,7 +34,7 @@ app.post('/api/tags', async (req, res) => {
             console.log(tagExists);
             //If tag exists, adds article to article property of existing tag
             tagExists.articles.push(article);
-            await usersCollection.updateOne({ topic: tag.topic }, { $set: { articles: tagExists.articles } });
+            await tagCollection.updateOne({ topic: tag.topic }, { $set: { articles: tagExists.articles } });
         }
         else {
             //Otherwise, creates new tag
