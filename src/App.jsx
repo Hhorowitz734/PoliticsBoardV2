@@ -13,6 +13,13 @@ import AccountEntryPage from "./pages/login";
 import ViewArticle from "./pages/articleview";
 import Profile from "./pages/profile";
 
+const ViewArticlesWrapper = () => { //Handles dynamic articleS page generation
+  const match = useMatch('/:tagID');
+  const tagId = match?.params?.tagID;
+
+  return <Articles tagID={tagId} />
+}
+
 const ViewArticleWrapper = () => { //Handles dynamic article page generation
   const match = useMatch('/article/:articleID');
   const articleId = match?.params?.articleID;
@@ -33,6 +40,10 @@ function App() {
     {
       path: '/',
       element: <Articles />,
+    },
+    {
+      path: '/:tagID',
+      element: <ViewArticlesWrapper />
     },
     {
       path: '/write',

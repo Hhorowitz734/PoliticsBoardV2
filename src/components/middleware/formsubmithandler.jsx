@@ -2,9 +2,12 @@
 
 import SingleArticleRetriever from "./singlearticleretriever";
 
-async function AddTagsToArticle(postID, tags) {
+function sleep(milliseconds) {
+    const start = new Date().getTime();
+    while (new Date().getTime() - start < milliseconds) {}
+  }
 
-    console.log('here');
+async function AddTagsToArticle(postID, tags) {
 
     const article = await SingleArticleRetriever(postID);
 
@@ -44,8 +47,8 @@ function FormHandler(formdata) {
         console.log(error);
     })
 
-
-   //window.location = '/'; //Redirects user home
+    sleep(500);
+    window.location = '/'; //Redirects user home
 
 }
 

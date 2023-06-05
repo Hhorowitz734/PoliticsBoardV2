@@ -1,55 +1,63 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
+
 import ArticleCard from "../components/articlecard";
 import Navbar from "../components/navbar";
 import TrendsBar from "../components/trends_sidebar/trendsbar";
-import FeedRetriever from '../components/middleware/feedretriever';
 
+import FeedRetriever from '../components/middleware/feedretriever';
+import TagFeedRetriever from '../components/middleware/tagfeedretriever';
 import Verifier from '../components/middleware/verifier';
 
+class Articles extends Component {
 
-export default function Articles() {
+  constructor(props){
+    super(props)
     
-    const [feed, setFeed] = useState([]);
-    const [user, setUser] = useState(null);
+    this.tagID = this.props.tagID === undefined ? null : this.props.tagID;
 
-    useEffect(() => { //Hook to get feed on page load
-        async function fetchFeed() {
-          try {
-            const retrievedFeed = await FeedRetriever();
-            setFeed(retrievedFeed.reverse());
-          } catch (error) {
-            console.log(error);
-          }
-        }
-      
-        fetchFeed();
-      }, []);
+    this.state = {
+      feed: null,
+      user: null
+    }
+  }
 
-    useEffect(() => { //UseEffect hook to get user object
-        async function fetchUser() {
-          try {
-            const userobj = await Verifier();
-            setUser(userobj);
-          } catch (error) {
-            console.log(error);
-          }
-        }
-      
-        fetchUser();
-      }, []);
-      
+  async componentDidMount() {
+    try {
+      await this.fetchFeed();
+      await this.fetchUser();
+      document.body.style.overflow = 'hidden';
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-    // Prevents site from scrolling
-    useEffect(() => {
-        document.body.style.overflow = 'hidden';
-        return () => {
-        document.body.style.overflow = 'unset';
-        };
-    }, []);
+  componentWillUnmount() {
+    document.body.style.overflow = 'unset';
+  }
 
+  async fetchFeed() {
+    let retrievedFeed;
+    if(this.tagID){
+      const tag = await TagFeedRetriever(this.tagID);
+      retrievedFeed = tag.articles; 
+      retrievedFeed = retrievedFeed.filter((value) => value !== null);
+    } else {
+      retrievedFeed = await FeedRetriever();
+    }
+    this.setState({ feed : retrievedFeed.reverse() }) 
+  }
 
-    return (
-        <div className="flex flex-col min-h-screen bg-white">
+  async fetchUser() {
+    const userobj = await Verifier();
+    this.setState({ user : userobj }) 
+  }
+
+  render() {
+
+    const {user, feed} = this.state;
+
+    return(
+      <div className="flex flex-col min-h-screen bg-white">
         <Navbar />
         <div className="grid grid-cols-3">
             <div id="articlesbar" className="max-h-screen scrollbar-thumb-gray-400 scrollbar-track-gray-300 scrollbar-thin col-span-3 lg:col-span-2 border border-l-transparent border-t-transparent border-b-tranparent px-2 overflow-x-hidden overflow-y-scroll">
@@ -61,7 +69,13 @@ export default function Articles() {
             
             </div>
             <TrendsBar />
+          </div>
         </div>
-        </div>
-    );
+    )
+  }
+
+  
+
 }
+
+export default Articles;

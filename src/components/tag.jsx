@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 
+import TagIdRetriever from './middleware/tag_id_retriever';
+
 class Tag extends Component{
 
     constructor(props) {
         super(props);
+
 
 
         this.normalOpacity = "0.3)";
@@ -14,12 +17,19 @@ class Tag extends Component{
         this.color = props.tagObject.color;
 
         this.inForm = props.inForm;
+        this.id = this.inForm ? props.tagObject._id : null;
         this.tagListSetCallback = props.tagListSetCallback; //Callback to set the list of tags for a form
 
         this.state = {
             isSelected: false //Property for forms where tags can be selected
         }
 
+    }
+
+    async componentDidMount() {
+        if (!this.inForm){
+            this.id = await TagIdRetriever(this.topic);
+        }
     }
 
     handleMouseEnter = (e) => {
@@ -34,7 +44,9 @@ class Tag extends Component{
         }
     };
 
-    handleOnClick = () => {
+    handleOnClick = (e) => {
+
+        e.stopPropagation();
 
         if (this.inForm) { //Handles case that this tag is in a form
             const didGoIn = this.tagListSetCallback({topic: this.topic, color: this.color})
@@ -42,8 +54,9 @@ class Tag extends Component{
                 this.setState({isSelected : !this.state.isSelected})
             }
         } else { //Handles case that this tag is not in a form
-
+            window.location = `/${this.id}`
         }
+
     }
 
     render() {

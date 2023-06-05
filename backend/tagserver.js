@@ -31,7 +31,6 @@ app.post('/api/tags', async (req, res) => {
     for (const tag of tags) {
         const tagExists = await tagCollection.findOne({ topic: tag.topic });
         if (tagExists) {
-            console.log(tagExists);
             //If tag exists, adds article to article property of existing tag
             tagExists.articles.push(article);
             await tagCollection.updateOne({ topic: tag.topic }, { $set: { articles: tagExists.articles } });
@@ -59,6 +58,41 @@ app.get('/api/tags', async (req, res) => {
     res.json(tags);
   });
 
+//Get method for getting tag  given its id
+app.get('/api/tags/gettag/:id', async (req, res) => {
+    try {
+        const tagId = req.params.id;
+        const tagCollection = db.collection('tags');
+        const tag = await tagCollection.findOne({ _id: new ObjectId(tagId) });
+
+        if (tag) {
+          res.json(tag);
+        } else {
+          res.status(404).json({ error: 'Tag not found.' });
+        }
+      } catch (error) {
+        console.error('Error retrieving tag:', error);
+        res.status(500).json({ error: 'An error occurred while retrieving the post.' });
+      }
+});
+
+//Get method for getting id given a tag topic
+app.get('/api/tags/gettagid/:topic', async (req, res) => {
+    try {
+        const tagTopic = req.params.topic;
+        const tagCollection = db.collection('tags');
+        const tag = await tagCollection.findOne({ topic: tagTopic });
+
+        if (tag) {
+          res.json(tag._id);
+        } else {
+          res.status(404).json({ error: 'Tag not found.' });
+        }
+      } catch (error) {
+        console.error('Error retrieving post:', error);
+        res.status(500).json({ error: 'An error occurred while retrieving the post.' });
+      }
+});
 
 
 // Delete method for removing all tags
@@ -67,8 +101,6 @@ app.delete('/api/tags', async (req, res) => {
     const deleteResult = await tagCollection.deleteMany({});
     res.json({ deletedCount: deleteResult.deletedCount });
   });
-
-
 
 
 app.listen(PORT, () => {

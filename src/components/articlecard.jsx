@@ -23,7 +23,7 @@ class ArticleCard extends Component {
     render () {
         return (
             <div className="ml-2 h-1/3 md:h-64 lg:h-56 w-full border border-l-transparent border-t-transparent border-r-transparent flex overflow-hidden hover:bg-gray-200 transition duration-200 cursor-pointer px-2"
-            onClick = {() => window.location = `/article/${this.id}`}>
+            onClick = {(e) => {window.location = `/article/${this.id}`}}>
                 <div>
                     <div className="flex items-center">
                         <h1 className="text-2xl mt-2">{this.title}</h1>

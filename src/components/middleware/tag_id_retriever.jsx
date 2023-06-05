@@ -1,0 +1,19 @@
+//Retrieves a tag's id given its topic
+
+function TagIdRetriever(topic) {
+    return fetch(`http://localhost:3004/api/tags/gettagid/${topic}`, {
+        method: 'GET',
+        headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(),
+    })
+        .then((response) => response.json())
+        .catch((error) => {
+        console.log(error);
+        throw error;
+        });
+}
+
+export default TagIdRetriever;
+  
