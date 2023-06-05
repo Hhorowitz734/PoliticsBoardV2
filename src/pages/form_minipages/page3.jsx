@@ -2,11 +2,11 @@ import React, {useState, useRef} from 'react';
 
 import NextButton from "../../components/form_components/next_btn";
 import Toggle from "../../components/form_components/toggle";
+import TagAdder from '../../components/form_components/tags_adder';
 
 function PageThree({ pageLocationCallback, formResults, setFormResults }) {
 
     const handlePageLocationChange = pageLocationCallback;
-
 
     const anonToggleRef = useRef(null);
 
@@ -24,6 +24,7 @@ function PageThree({ pageLocationCallback, formResults, setFormResults }) {
             <h1 className="text-6xl text-center mt-8 font-bold">Settings</h1>
             <div className="w-full flex flex-col mt-8 items-center">
                 <Toggle ref = {anonToggleRef} />
+                <TagAdder />
             </div>
             
             <NextButton currentPage = {3} handlePageLocationChange = {handleNextPage}/>

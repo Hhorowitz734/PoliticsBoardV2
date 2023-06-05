@@ -5,10 +5,15 @@ class Tag extends Component{
     constructor(props) {
         super(props);
 
-        this.color = `rgba(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, `;
-
         this.normalOpacity = "0.3)";
         this.hoverOpacity = "0.5)";
+
+        this.topic = props.tagObject.topic;
+        this.color = props.tagObject.color;
+        if (!this.color) {
+            this.color = `rgba(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, `
+            this.topic = 'Tag'
+        }
 
     }
 
@@ -29,7 +34,7 @@ class Tag extends Component{
                 style = {{backgroundColor: `${this.color}${this.normalOpacity}`}}
                 onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}
-                >Tag</h1>
+                >{this.topic}</h1>
             </div>
         )
     }
