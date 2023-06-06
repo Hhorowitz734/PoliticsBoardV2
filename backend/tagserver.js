@@ -60,6 +60,7 @@ app.get('/api/tags', async (req, res) => {
 
 //Get method for getting tag  given its id
 app.get('/api/tags/gettag/:id', async (req, res) => {
+
     try {
         const tagId = req.params.id;
         const tagCollection = db.collection('tags');
@@ -76,7 +77,7 @@ app.get('/api/tags/gettag/:id', async (req, res) => {
       }
 });
 
-//Get method for getting id given a tag topic
+//Get method for getting tag given a tag topic
 app.get('/api/tags/gettagid/:topic', async (req, res) => {
     try {
         const tagTopic = req.params.topic;
@@ -84,7 +85,7 @@ app.get('/api/tags/gettagid/:topic', async (req, res) => {
         const tag = await tagCollection.findOne({ topic: tagTopic });
 
         if (tag) {
-          res.json(tag._id);
+          res.json(tag);
         } else {
           res.status(404).json({ error: 'Tag not found.' });
         }
