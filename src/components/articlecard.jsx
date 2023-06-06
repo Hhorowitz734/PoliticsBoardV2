@@ -31,7 +31,7 @@ class ArticleCard extends Component {
                         <BiShare className="m-2 mt-5 text-xl font-thin"/>
                     </div>
                     <div className="flex items-center">
-                    <img src={this.user.pfp} alt="Your image" className="h-8 mr-1 rounded-full" style={{ borderRadius: "50%" }} />
+                    <img src={this.user.pfp} alt="Your image" className="h-8 w-8 bg-cover mr-1 rounded-full" style={{ borderRadius: "50%" }} />
                         <h1 className="m-2 font-bold">&middot;</h1>
                         <h1 className="mt-2 font-bold">{this.name}</h1>
                         <h1 className="m-2 font-bold">&middot;</h1>

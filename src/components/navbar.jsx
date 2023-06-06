@@ -52,7 +52,7 @@ class Navbar extends Component {
                         <h1 className={`${user ? 'font-bold' : ''} text-2xl  hover:text-gray-500 transition duration-300`} >
                                 {user ? user.name : 'Log In'}
                         </h1>
-                        {user && <img src={user.pfp} alt="Your image" className="h-8 ml-2 rounded-full" style={{ borderRadius: "50%" }} />}
+                        {user && <img src={user.pfp} alt="Your image" className="h-8 w-8 bg-cover ml-2 rounded-full" style={{ borderRadius: "50%" }} />}
                     </div>
                 </div>
             </div>
