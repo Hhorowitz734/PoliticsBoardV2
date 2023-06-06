@@ -4,6 +4,7 @@ import SingleArticleRetriever from '../components/middleware/singlearticleretrie
 
 import Navbar from '../components/navbar';
 import CommentInput from '../components/comment_input';
+import Comment from '../components/comment';
 
 class ViewArticle extends Component{
 
@@ -30,6 +31,8 @@ class ViewArticle extends Component{
 
         const {article} = this.state;
 
+        console.log(article)
+
         return(
             <div className="flex flex-col min-h-screen bg-white">
                 <Navbar />
@@ -37,6 +40,11 @@ class ViewArticle extends Component{
                 {article && <div className='w-11/12 mt-4 mx-auto border rounded-lg p-4' 
                 dangerouslySetInnerHTML={{__html: article.articleData}}></div>}
                 <CommentInput postID = {this.articleId} />
+                {article && article.comments && article.comments.length > 0 ? (
+                    article.comments.map((comment) => <Comment commentObject={comment} key={comment.id} />)
+                    ) : (
+                    <h1 className='text-4xl font-bold text-center mt-8'>No Comments Yet.</h1>
+                )}
                 
             </div>
         )
