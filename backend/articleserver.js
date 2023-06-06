@@ -118,7 +118,18 @@ app.delete('/api/posts', async (req, res) => { //ADD METHODS FOR DELETE ONE, DEL
 app.post('/api/posts/addcomment', async (req, res) => {
   try {
     const postId = req.body.postId;
-    const comment = req.body.comment;
+    const commentBaseData = req.body.comment;
+
+    const commentServerData = {
+      _id: Math.random().toString(36).substr(2, 9),
+      voters: 0,
+      affiliationScore: 0
+    }
+
+    const comment = {
+      ...commentBaseData,
+      ...commentServerData
+    }
 
     const postCollection = db.collection('posts');
 
@@ -136,6 +147,50 @@ app.post('/api/posts/addcomment', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred during comment adding.' });
+  }
+});
+
+//Method to update affiliation score of comment
+app.post('/api/posts/updatecommentscore', async (req, res) => {
+  try {
+    const postId = req.body.postId;
+    const commentId = req.body.commentId;
+    const vote = req.body.vote;
+
+    const postCollection = db.collection('posts');
+
+    const post = await postCollection.findOne({ _id: new ObjectId(postId) });
+
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    let newAS; //New affiliation score
+
+    const updatedComments = post.comments.map(comment => {
+      if (comment._id === commentId) {
+        const updatedAffiliationScore = ((comment.affiliationScore * comment.voters) + vote) / (comment.voters + 1);
+        newAS = updatedAffiliationScore;
+        return {
+          ...comment,
+          affiliationScore: updatedAffiliationScore,
+          voters: comment.voters + 1
+        };
+      }
+      return comment;
+    });
+
+    // Update the post with the updated comments
+    await postCollection.updateOne(
+      { _id: new ObjectId(postId) },
+      { $set: { comments: updatedComments } }
+    );
+
+    res.json({newAS}) //RETURNS UPDATED AFFILIATION SCORE
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred during comment voting.' });
   }
 });
   

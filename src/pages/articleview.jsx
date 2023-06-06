@@ -13,25 +13,23 @@ class ViewArticle extends Component{
         this.articleId = props.articleId;
         this.state = {
             article: null,
+            comments: null
         }
     }
 
     async componentDidMount() { //Loads in article
         try {
             const article = await SingleArticleRetriever(this.articleId);
-            this.setState({ article: article });
+            this.setState({ article: article, comments: article.comments });
           } catch (error) {
             console.error('Error retrieving article:', error);
           }
     }
 
 
-
     render() {
 
-        const {article} = this.state;
-
-        console.log(article)
+        const {article, comments} = this.state;
 
         return(
             <div className="flex flex-col min-h-screen bg-white">
@@ -40,8 +38,8 @@ class ViewArticle extends Component{
                 {article && <div className='w-11/12 mt-4 mx-auto border rounded-lg p-4' 
                 dangerouslySetInnerHTML={{__html: article.articleData}}></div>}
                 <CommentInput postID = {this.articleId} />
-                {article && article.comments && article.comments.length > 0 ? (
-                    article.comments.map((comment) => <Comment commentObject={comment} key={comment.id} />)
+                {article && comments && comments.length > 0 ? (
+                    comments.map((comment) => <Comment commentObject={comment} key={comment.id} postID = {this.articleId} />)
                     ) : (
                     <h1 className='text-4xl font-bold text-center mt-8'>No Comments Yet.</h1>
                 )}
