@@ -33,7 +33,8 @@ app.post('/api/posts', async (req, res) => { //REPLACE THIS WITH GET ALL POSTS F
         userId: req.body.anonymous ? null : user._id,
         dateTimePosted: new Date().toISOString(), //Gets current datetime
         affiliationScore: 0, //Tracks the poltical affiliation of the post from -1 to 1
-        likes: 0 //Amount of likes a post has
+        likes: 0, //Amount of likes a post has
+        comments: [] 
     }
     const postData = { 
         ...ServerVars, //Variables built in automatically for post
@@ -113,6 +114,30 @@ app.delete('/api/posts', async (req, res) => { //ADD METHODS FOR DELETE ONE, DEL
   }
 });
 
+//Adds a comment to a post given a postID and comment
+app.post('/api/posts/addcomment', async (req, res) => {
+  try {
+    const postId = req.body.postId;
+    const comment = req.body.comment;
+
+    const postCollection = db.collection('posts');
+
+    const post = await postCollection.findOne({ _id: new ObjectId(postId) });
+
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    post.comments.push(comment);
+    await postCollection.updateOne({ _id: new ObjectId(postId) }, { $set: { comments: post.comments } });
+
+    res.json({status: 'ok'});
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred during comment adding.' });
+  }
+});
   
 
 

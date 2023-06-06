@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import SingleArticleRetriever from '../components/middleware/singlearticleretriever';
 
 import Navbar from '../components/navbar';
+import CommentInput from '../components/comment_input';
 
 class ViewArticle extends Component{
 
@@ -17,7 +18,7 @@ class ViewArticle extends Component{
     async componentDidMount() { //Loads in article
         try {
             const article = await SingleArticleRetriever(this.articleId);
-            this.setState({ article })
+            this.setState({ article: article });
           } catch (error) {
             console.error('Error retrieving article:', error);
           }
@@ -35,6 +36,8 @@ class ViewArticle extends Component{
                 <h1 className='w-full text-4xl text-center mt-4'>{article ? article.title : 'Loading...'}</h1>
                 {article && <div className='w-11/12 mt-4 mx-auto border rounded-lg p-4' 
                 dangerouslySetInnerHTML={{__html: article.articleData}}></div>}
+                <CommentInput postID = {this.articleId} />
+                
             </div>
         )
     }
