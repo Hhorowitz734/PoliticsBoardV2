@@ -6,6 +6,8 @@ import Navbar from '../components/navbar';
 import CommentInput from '../components/comment_input';
 import Comment from '../components/comment';
 
+import Verifier from '../components/middleware/verifier';
+
 class ViewArticle extends Component{
 
     constructor(props) {
@@ -13,7 +15,8 @@ class ViewArticle extends Component{
         this.articleId = props.articleId;
         this.state = {
             article: null,
-            comments: null
+            comments: null,
+            user: null
         }
     }
 
@@ -24,12 +27,18 @@ class ViewArticle extends Component{
           } catch (error) {
             console.error('Error retrieving article:', error);
           }
+        try {
+            const user = await Verifier();
+            this.setState({user: user})
+        } catch (error) {
+            console.error('Error retrieving user:', error);
+        }
     }
 
 
     render() {
 
-        const {article, comments} = this.state;
+        const {article, comments, user} = this.state;
 
         return(
             <div className="flex flex-col min-h-screen bg-white">
@@ -38,8 +47,8 @@ class ViewArticle extends Component{
                 {article && <div className='w-11/12 mt-4 mx-auto border rounded-lg p-4' 
                 dangerouslySetInnerHTML={{__html: article.articleData}}></div>}
                 <CommentInput postID = {this.articleId} />
-                {article && comments && comments.length > 0 ? (
-                    comments.map((comment) => <Comment commentObject={comment} key={comment.id} postID = {this.articleId} />)
+                {user && comments && comments.length > 0 ? (
+                    comments.map((comment) => <Comment commentObject={comment} key={comment.id} postID = {this.articleId} userID = {user._id}/>)
                     ) : (
                     <h1 className='text-4xl font-bold text-center mt-8'>No Comments Yet.</h1>
                 )}

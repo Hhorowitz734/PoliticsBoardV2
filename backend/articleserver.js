@@ -122,7 +122,8 @@ app.post('/api/posts/addcomment', async (req, res) => {
 
     const commentServerData = {
       _id: Math.random().toString(36).substr(2, 9),
-      voters: 0,
+      votersCount: 0,
+      voterObjects: [], //Stores userID and vote
       affiliationScore: 0
     }
 
@@ -150,12 +151,13 @@ app.post('/api/posts/addcomment', async (req, res) => {
   }
 });
 
-//Method to update affiliation score of comment
+//Post method handles updating comment score
 app.post('/api/posts/updatecommentscore', async (req, res) => {
   try {
     const postId = req.body.postId;
     const commentId = req.body.commentId;
     const vote = req.body.vote;
+    const userId = req.body.userId;
 
     const postCollection = db.collection('posts');
 
@@ -165,16 +167,38 @@ app.post('/api/posts/updatecommentscore', async (req, res) => {
       return res.status(404).json({ error: 'Post not found' });
     }
 
-    let newAS; //New affiliation score
+    let newAS; // New affiliation score
 
     const updatedComments = post.comments.map(comment => {
       if (comment._id === commentId) {
-        const updatedAffiliationScore = ((comment.affiliationScore * comment.voters) + vote) / (comment.voters + 1);
-        newAS = updatedAffiliationScore;
+        let updatedAffiliationScore;
+        let updatedVoterObjects = [];
+        let userFound = false;
+
+        comment.voterObjects.forEach(voterObject => {
+          if (voterObject.userID === userId) {
+            userFound = true;
+            updatedAffiliationScore = ((comment.affiliationScore * comment.votersCount) - voterObject.vote + vote) / comment.votersCount;
+            voterObject.vote = vote;
+            updatedVoterObjects.push(voterObject);
+          } else {
+            updatedVoterObjects.push(voterObject);
+          }
+        });
+
+        if (!userFound) {
+          updatedAffiliationScore = ((comment.affiliationScore * comment.votersCount) + vote) / (comment.votersCount + 1);
+          comment.votersCount += 1;
+          updatedVoterObjects.push({ userID: userId, vote: vote });
+        }
+
+        newAS = updatedAffiliationScore; // Set newAS to the new affiliation score
+
         return {
           ...comment,
           affiliationScore: updatedAffiliationScore,
-          voters: comment.voters + 1
+          votersCount: comment.votersCount,
+          voterObjects: updatedVoterObjects // Update voter objects
         };
       }
       return comment;
@@ -186,13 +210,16 @@ app.post('/api/posts/updatecommentscore', async (req, res) => {
       { $set: { comments: updatedComments } }
     );
 
-    res.json({newAS}) //RETURNS UPDATED AFFILIATION SCORE
+    res.json({ newAS }); // Returns updated affiliation score
 
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred during comment voting.' });
   }
 });
+
+
+
   
 
 

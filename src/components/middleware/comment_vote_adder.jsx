@@ -1,6 +1,6 @@
 //Adds a vote to a given comment
 
-function CommentVoteAdder (postID, commentID, vote) {
+function CommentVoteAdder (postID, commentID, vote, userID) {
 
     return fetch('http://localhost:3003/api/posts/updatecommentscore', {
         method: "POST",
@@ -10,7 +10,8 @@ function CommentVoteAdder (postID, commentID, vote) {
         body: JSON.stringify({
             postId: postID,
             commentId: commentID,
-            vote: vote
+            vote: vote,
+            userId: userID
         }),
     })
     .then((response) => response.json())
