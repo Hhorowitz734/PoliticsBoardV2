@@ -33,6 +33,8 @@ app.post('/api/posts', async (req, res) => { //REPLACE THIS WITH GET ALL POSTS F
         userId: req.body.anonymous ? null : user._id,
         dateTimePosted: new Date().toISOString(), //Gets current datetime
         affiliationScore: 0, //Tracks the poltical affiliation of the post from -1 to 1
+        votersCount: 0,
+        voterObjects: [],
         likes: 0, //Amount of likes a post has
         comments: [] 
     }
@@ -113,6 +115,63 @@ app.delete('/api/posts', async (req, res) => { //ADD METHODS FOR DELETE ONE, DEL
 
   }
 });
+
+// POST method handles updating post score
+app.post('/api/posts/updatepostscore', async (req, res) => {
+  try {
+    const postId = req.body.postId;
+    const vote = req.body.vote;
+    const userId = req.body.userId;
+
+    const postCollection = db.collection('posts');
+
+    const post = await postCollection.findOne({ _id: new ObjectId(postId) });
+
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    let newAS; // New post score
+
+    const updatedPost = {
+      ...post,
+      votersCount: post.votersCount || 0,
+      voterObjects: post.voterObjects || []
+    };
+
+    let userFound = false;
+  
+    updatedPost.voterObjects.forEach(voterObject => {
+      if (voterObject.userId === userId) {
+        userFound = true;
+        updatedPost.affiliationScore = ((post.affiliationScore * post.votersCount) - voterObject.vote + vote) / post.votersCount;
+        voterObject.vote = vote;
+      }
+    });
+
+    if (!userFound) {
+      updatedPost.affiliationScore = ((post.affiliationScore * post.votersCount) + vote) / (post.votersCount + 1);
+      updatedPost.votersCount += 1;
+      updatedPost.voterObjects.push({ userId: userId, vote: vote });
+    }
+
+    newAS = updatedPost.affiliationScore; // Set newAS to the new post score
+
+    // Update the post with the updated score
+    await postCollection.updateOne(
+      { _id: new ObjectId(postId) },
+      { $set: { affiliationScore: updatedPost.affiliationScore, votersCount: updatedPost.votersCount, voterObjects: updatedPost.voterObjects } }
+    );
+
+    res.json({ newAS }); // Return updated post score
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred during post voting.' });
+  }
+});
+
+
 
 //Adds a comment to a post given a postID and comment
 app.post('/api/posts/addcomment', async (req, res) => {

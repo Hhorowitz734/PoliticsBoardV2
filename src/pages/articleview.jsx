@@ -5,6 +5,7 @@ import SingleArticleRetriever from '../components/middleware/singlearticleretrie
 import Navbar from '../components/navbar';
 import CommentInput from '../components/comment_input';
 import Comment from '../components/comment';
+import PostVoting from '../components/postvoting';
 
 import Verifier from '../components/middleware/verifier';
 
@@ -44,6 +45,7 @@ class ViewArticle extends Component{
             <div className="flex flex-col min-h-screen bg-white">
                 <Navbar />
                 <h1 className='w-full text-4xl text-center mt-4'>{article ? article.title : 'Loading...'}</h1>
+                {user && <PostVoting postID = {this.articleId} userID = {user._id} currentAS = {article.affiliationScore}/>}
                 {article && <div className='w-11/12 mt-4 mx-auto border rounded-lg p-4' 
                 dangerouslySetInnerHTML={{__html: article.articleData}}></div>}
                 <CommentInput postID = {this.articleId} />

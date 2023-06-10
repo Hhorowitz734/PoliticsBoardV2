@@ -18,11 +18,16 @@ class ArticleCard extends Component {
             pfp: props.articleObject.userPic,
         }
         this.tags = props.articleObject.tags;
+
+        const affiliationScore = props.articleObject.affiliationScore;
+        this.bgColor = `rgba(${Math.round((1 - affiliationScore) * 127.5)}, ${Math.round((1 - Math.abs(affiliationScore)) * 127.5)}, ${Math.round((1 + affiliationScore) * 127.5)}, .5)`
     }
 
     render () {
+
         return (
-            <div className="ml-2 h-1/3 md:h-64 lg:h-56 w-full border border-l-transparent border-t-transparent border-r-transparent flex overflow-hidden hover:bg-gray-200 transition duration-200 cursor-pointer px-2"
+            <div className="ml-2 h-1/3 md:h-64 lg:h-56 w-full border border-l-transparent border-t-transparent border-r-transparent flex overflow-hidden transition duration-200 cursor-pointer px-2"
+            style={{ backgroundColor: this.bgColor }}
             onClick = {(e) => {window.location = `/article/${this.id}`}}>
                 <div>
                     <div className="flex items-center">
