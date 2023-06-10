@@ -20,14 +20,31 @@ class ArticleCard extends Component {
         this.tags = props.articleObject.tags;
 
         const affiliationScore = props.articleObject.affiliationScore;
-        this.bgColor = `rgba(${Math.round((1 - affiliationScore) * 127.5)}, ${Math.round((1 - Math.abs(affiliationScore)) * 127.5)}, ${Math.round((1 + affiliationScore) * 127.5)}, .5)`
+
+        this.baseColor = `rgba(${Math.round((1 - affiliationScore) * 127.5)}, ${Math.round((1 - Math.abs(affiliationScore)) * 127.5)}, ${Math.round((1 + affiliationScore) * 127.5)}, `
+
+        this.state = {
+            bgOpacity: `.3)`,
+        }
     }
+
+    handleMouseEnter = (e) => {
+        this.setState({bgOpacity : `.5)`});
+      };
+    
+    handleMouseLeave = (e) => {
+       this.setState({bgOpacity: `.3)`})
+    };
 
     render () {
 
+        const {bgOpacity} = this.state;
+
         return (
-            <div className="ml-2 h-1/3 md:h-64 lg:h-56 w-full border border-l-transparent border-t-transparent border-r-transparent flex overflow-hidden transition duration-200 cursor-pointer px-2"
-            style={{ backgroundColor: this.bgColor }}
+            <div className="ml-2 h-1/3 md:h-64 lg:h-56 w-full border border-l-transparent border-t-transparent border-r-transparent flex overflow-hidden transition duration-150 cursor-pointer px-2"
+            style={{ backgroundColor: this.baseColor + bgOpacity }}
+            onMouseEnter={this.handleMouseEnter}
+            onMouseLeave={this.handleMouseLeave}
             onClick = {(e) => {window.location = `/article/${this.id}`}}>
                 <div>
                     <div className="flex items-center">
