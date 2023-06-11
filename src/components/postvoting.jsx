@@ -33,11 +33,13 @@ class PostVoting extends Component{
 
         return(
             <div className='w-full flex justify-center'>
-                <div className='h-12 rounded-lg flex mt-2' style={{ backgroundColor: bgColor }}>
+                <div className='h-12 rounded-lg flex mt-2 px-1' style={{ backgroundColor: bgColor }}>
                         <div className='w-full flex items-center mx-1'><div className='rounded-full h-5 w-5 bg-[#5e21ff] hover:bg-[#360ea5] cursor-pointer'
                         onClick={() => this.updateAffiliationScore(1)}></div></div>
                         <div className='w-full flex items-center mx-1'><div className='rounded-full h-5 w-5 bg-[#60a5fa] hover:bg-[#2b66af] cursor-pointer'
                         onClick={() => this.updateAffiliationScore(.5)}></div></div>
+                         <div className='w-full flex items-center mx-1'><div className='rounded-full h-5 w-5 bg-[#7c8692] hover:bg-[#2c3036] cursor-pointer'
+                        onClick={() => this.updateAffiliationScore(0)}></div></div>
                         <div className='w-full flex items-center mx-1'><div className='rounded-full h-5 w-5 bg-[#fa7269] hover:bg-[#5d2723] cursor-pointer'
                         onClick={() => this.updateAffiliationScore(-.5)}></div></div>
                         <div className='w-full flex items-center mx-1'><div className='rounded-full h-5 w-5 bg-[#d53767] hover:bg-[#73253d] cursor-pointer'

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import CommentVoteAdder from './middleware/comment_vote_adder';
+import ScoreUpdateTicker from './affiliation_voting_ticker';
 
 class Comment extends Component {
 
@@ -19,6 +20,13 @@ class Comment extends Component {
 
         this.state = {
             bgColor: `rgba(${Math.round((1 - affiliationScore) * 127.5)}, ${Math.round((1 - Math.abs(affiliationScore)) * 127.5)}, ${Math.round((1 + affiliationScore) * 127.5)}, .5)`,
+            scoreUpdateRefs: {
+                [-1]: React.createRef(),
+                [-.5]: React.createRef(),
+                [0]: React.createRef(),
+                [.5]: React.createRef(),
+                [1]: React.createRef()
+            }
         }
     }
 
@@ -29,17 +37,32 @@ class Comment extends Component {
         this.setState({bgColor : `rgba(${Math.round((1 - updatedAffiliationScore) * 127.5)}, ${Math.round((1 - Math.abs(updatedAffiliationScore)) * 127.5)}, ${Math.round((1 + updatedAffiliationScore) * 127.5)}, .5)`,})
     }
 
+
     comment_voting_system = () => {
+
+        const updateAffiliationScoreCallback = (voteValue) => {
+            Object.entries(this.state.scoreUpdateRefs).forEach(([key, ref]) => {
+                if (key != voteValue) {
+                    ref.current.handleUnselected();
+                }
+            })
+            this.updateAffiliationScore(voteValue);
+
+        }
+
+
         return(
             <div className='w-13 h-100 overflow-hidden bg-white rounded-lg py-1 px-2'>
-                <div className='w-full flex items-center'><div className='rounded-full h-5 w-5 bg-[#5e21ff] hover:bg-[#360ea5] cursor-pointer'
-                onClick={() => this.updateAffiliationScore(1)}></div>hi</div>
-                <div className='w-full flex items-center'><div className='rounded-full h-5 w-5 bg-[#60a5fa] hover:bg-[#2b66af] cursor-pointer'
-                onClick={() => this.updateAffiliationScore(.5)}></div>hi</div>
-                <div className='w-full flex items-center'><div className='rounded-full h-5 w-5 bg-[#fa7269] hover:bg-[#5d2723] cursor-pointer'
-                onClick={() => this.updateAffiliationScore(-.5)}></div>hi</div>
-                <div className='w-full flex items-center'><div className='rounded-full h-5 w-5 bg-[#d53767] hover:bg-[#73253d] cursor-pointer'
-                onClick={() => this.updateAffiliationScore(-1)}></div>hi</div>
+                <ScoreUpdateTicker contentType = {'comment'} commentCallback = {updateAffiliationScoreCallback} scoreUpdate = {1}
+                ref={this.state.scoreUpdateRefs[1]} />
+                <ScoreUpdateTicker contentType = {'comment'} commentCallback = {updateAffiliationScoreCallback} scoreUpdate = {.5}
+                ref={this.state.scoreUpdateRefs[.5]} />
+                <ScoreUpdateTicker contentType = {'comment'} commentCallback = {updateAffiliationScoreCallback} scoreUpdate = {0}
+                ref={this.state.scoreUpdateRefs[0]} />
+                <ScoreUpdateTicker contentType = {'comment'} commentCallback = {updateAffiliationScoreCallback} scoreUpdate = {-.5}
+                ref={this.state.scoreUpdateRefs[-.5]} />
+                <ScoreUpdateTicker contentType = {'comment'} commentCallback = {updateAffiliationScoreCallback} scoreUpdate = {-1}
+                ref={this.state.scoreUpdateRefs[-1]}/>
             </div>
         )
     }
@@ -49,7 +72,7 @@ class Comment extends Component {
         const {bgColor} = this.state;
 
         return(
-            <div className='mt-4 w-11/12 h-28 mx-auto rounded-lg items-center p-2 overflow-y-scroll flex'
+            <div className='mt-4 w-11/12 h-32 mx-auto rounded-lg items-center p-2 overflow-y-scroll flex'
             style={{ backgroundColor: bgColor }}>
                 <div className='rounded-full h-14 w-14 bg-center bg-cover overflow-hidden' style={{ backgroundImage: `url(${this.commentObject.user.pfp})` }}></div>
                 <div className='h-full w-11/12 ml-4'>
