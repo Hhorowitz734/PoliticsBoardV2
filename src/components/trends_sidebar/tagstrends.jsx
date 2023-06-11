@@ -54,7 +54,7 @@ class TagsTrends extends Component {
     render() {
         return (
             <div className="overflow-y-scroll h-full">
-                <h1 className="text-center text-xl font-bold">Trending Tags</h1>
+                <h1 className="text-center text-xl font-bold">Tags</h1>
                 <div className="flex flex-wrap h-full">
                     {this.tags.map((tag) => (
                         <Tag tagObject={tag} key={tag.tag} />

@@ -46,7 +46,7 @@ class Profile extends Component {
                 <Navbar />
                 <div className="flex-grow flex items-center justify-center overflow-y-hidden">
                     <div className="w-[95%] h-[93%] grid grid-cols-3 mx-auto border rounded-xl shadow-lg">
-                        <ProfileSidebar user = {user} />
+                        {feed && <ProfileSidebar user = {user} userPosts = {feed} />}
                         <div className='max-h-screen scrollbar-thumb-gray-400 scrollbar-track-gray-300 scrollbar-thin col-span-3 lg:col-span-2 border border-l-transparent border-t-transparent border-b-tranparent px-2 overflow-x-hidden overflow-y-scroll'>
                         {feed && feed.length > 0 ? (
                             feed.map((article, index) => <ArticleCard articleObject = {article} key={index} />)
