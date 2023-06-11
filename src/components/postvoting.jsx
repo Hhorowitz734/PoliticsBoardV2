@@ -49,19 +49,17 @@ class PostVoting extends Component{
         }
 
         return(
-            <div className='w-full flex justify-center'>
-                <div className='h-12 rounded-lg flex mt-2 px-1' style={{ backgroundColor: bgColor }}>
-                    <ScoreUpdateTicker contentType = {'post'} postCallback = {updateAffiliationScoreCallback} scoreUpdate = {1}
-                    ref={this.state.scoreUpdateRefs[1]} />
-                    <ScoreUpdateTicker contentType = {'post'} postCallback = {updateAffiliationScoreCallback} scoreUpdate = {.5}
-                    ref={this.state.scoreUpdateRefs[.5]} />
-                    <ScoreUpdateTicker contentType = {'post'} postCallback = {updateAffiliationScoreCallback} scoreUpdate = {0}
-                    ref={this.state.scoreUpdateRefs[0]} />
-                    <ScoreUpdateTicker contentType = {'post'} postCallback = {updateAffiliationScoreCallback} scoreUpdate = {-.5}
-                    ref={this.state.scoreUpdateRefs[-.5]} />
-                    <ScoreUpdateTicker contentType = {'post'} postCallback = {updateAffiliationScoreCallback} scoreUpdate = {-1}
-                    ref={this.state.scoreUpdateRefs[-1]} />
-                </div>
+            <div className='h-12 rounded-lg flex px-1' style={{ backgroundColor: bgColor }}>
+                <ScoreUpdateTicker contentType = {'post'} postCallback = {updateAffiliationScoreCallback} scoreUpdate = {1}
+                ref={this.state.scoreUpdateRefs[1]} />
+                <ScoreUpdateTicker contentType = {'post'} postCallback = {updateAffiliationScoreCallback} scoreUpdate = {.5}
+                ref={this.state.scoreUpdateRefs[.5]} />
+                <ScoreUpdateTicker contentType = {'post'} postCallback = {updateAffiliationScoreCallback} scoreUpdate = {0}
+                ref={this.state.scoreUpdateRefs[0]} />
+                <ScoreUpdateTicker contentType = {'post'} postCallback = {updateAffiliationScoreCallback} scoreUpdate = {-.5}
+                ref={this.state.scoreUpdateRefs[-.5]} />
+                <ScoreUpdateTicker contentType = {'post'} postCallback = {updateAffiliationScoreCallback} scoreUpdate = {-1}
+                ref={this.state.scoreUpdateRefs[-1]} />
             </div>
         )
     }
