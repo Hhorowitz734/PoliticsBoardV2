@@ -79,7 +79,7 @@ app.get('/api/posts/viewone/:id', async (req, res) => {
       }
     } catch (error) {
       console.error('Error retrieving post:', error);
-      res.status(500).json({ error: 'An error occurred while retrieving the post.' });
+      res.status(500).json({ error: 'An error occurred while retrieving the post.', _id : null });
     }
   });
 

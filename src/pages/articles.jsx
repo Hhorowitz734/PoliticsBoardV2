@@ -7,6 +7,7 @@ import TrendsBar from "../components/trends_sidebar/trendsbar";
 import FeedRetriever from '../components/middleware/feedretriever';
 import TagFeedRetriever from '../components/middleware/tagfeedretriever';
 import Verifier from '../components/middleware/verifier';
+import SingleArticleRetriever from '../components/middleware/singlearticleretriever';
 
 class Articles extends Component {
 
@@ -39,8 +40,12 @@ class Articles extends Component {
     let retrievedFeed;
     if(this.tagID){
       const tag = await TagFeedRetriever(this.tagID);
-      retrievedFeed = tag.articles; 
-      retrievedFeed = retrievedFeed.filter((value) => value !== null);
+      retrievedFeed = tag.articles;
+      retrievedFeed = await Promise.all(retrievedFeed.map(async (articleID) => {
+        return SingleArticleRetriever(articleID);
+      }));      
+      console.log(retrievedFeed)
+      retrievedFeed = retrievedFeed.filter((value) => value._id !== null);
     } else {
       retrievedFeed = await FeedRetriever();
     }

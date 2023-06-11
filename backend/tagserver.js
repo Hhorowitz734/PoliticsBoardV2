@@ -32,14 +32,14 @@ app.post('/api/tags', async (req, res) => {
         const tagExists = await tagCollection.findOne({ topic: tag.topic });
         if (tagExists) {
             //If tag exists, adds article to article property of existing tag
-            tagExists.articles.push(article);
+            tagExists.articles.push(article._id);
             await tagCollection.updateOne({ topic: tag.topic }, { $set: { articles: tagExists.articles } });
         }
         else {
             //Otherwise, creates new tag
             const tagData = {
                 topic: tag.topic,
-                articles: [article],
+                articles: [article._id],
                 color: `rgba(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, `,
             }
 
