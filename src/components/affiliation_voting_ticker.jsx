@@ -47,6 +47,8 @@ class ScoreUpdateTicker extends Component {
     async handleBtnClicked(vote) {
         if (this.contentType === 'comment') {
             this.commentCallback(vote);
+        } else if (this.contentType == 'post'){
+            this.postCallback(vote);
         }
         this.setState({bgColor: this.selectedColor});
     }
@@ -60,7 +62,7 @@ class ScoreUpdateTicker extends Component {
         const {bgColor} = this.state;
 
         return(
-            <div className='w-full flex items-center'><div className={`rounded-full h-5 w-5 hover:bg-[${this.selectedColor}] cursor-pointer`}
+            <div className='w-full flex items-center'><div className={`rounded-full h-5 w-5 hover:bg-[${this.selectedColor}] cursor-pointer transition duration-200 ${this.contentType === 'post' ? 'mx-1' : ''}`}
             style = {{backgroundColor: `${bgColor}`}}
             onClick={() => this.handleBtnClicked(this.scoreUpdate)}></div></div>
         )

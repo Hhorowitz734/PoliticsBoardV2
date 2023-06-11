@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 
 import PostVoteAdder from "./middleware/post_vote_adder";
+import ScoreUpdateTicker from "./affiliation_voting_ticker";
 
 class PostVoting extends Component{
 
@@ -12,7 +13,14 @@ class PostVoting extends Component{
         const affiliationScore = props.currentAS;
 
         this.state = {
-            bgColor: `rgba(${Math.round((1 - affiliationScore) * 127.5)}, ${Math.round((1 - Math.abs(affiliationScore)) * 127.5)}, ${Math.round((1 + affiliationScore) * 127.5)}, .5)`
+            bgColor: `rgba(${Math.round((1 - affiliationScore) * 127.5)}, ${Math.round((1 - Math.abs(affiliationScore)) * 127.5)}, ${Math.round((1 + affiliationScore) * 127.5)}, .5)`,
+            scoreUpdateRefs: {
+                [-1]: React.createRef(),
+                [-.5]: React.createRef(),
+                [0]: React.createRef(),
+                [.5]: React.createRef(),
+                [1]: React.createRef()
+            }
         }
 
 
@@ -31,19 +39,28 @@ class PostVoting extends Component{
 
         const {bgColor} = this.state;
 
+        const updateAffiliationScoreCallback = (voteValue) => {
+            Object.entries(this.state.scoreUpdateRefs).forEach(([key, ref]) => {
+                if (key != voteValue) {
+                    ref.current.handleUnselected();
+                }
+            })
+            this.updateAffiliationScore(voteValue);
+        }
+
         return(
             <div className='w-full flex justify-center'>
                 <div className='h-12 rounded-lg flex mt-2 px-1' style={{ backgroundColor: bgColor }}>
-                        <div className='w-full flex items-center mx-1'><div className='rounded-full h-5 w-5 bg-[#5e21ff] hover:bg-[#360ea5] cursor-pointer'
-                        onClick={() => this.updateAffiliationScore(1)}></div></div>
-                        <div className='w-full flex items-center mx-1'><div className='rounded-full h-5 w-5 bg-[#60a5fa] hover:bg-[#2b66af] cursor-pointer'
-                        onClick={() => this.updateAffiliationScore(.5)}></div></div>
-                         <div className='w-full flex items-center mx-1'><div className='rounded-full h-5 w-5 bg-[#7c8692] hover:bg-[#2c3036] cursor-pointer'
-                        onClick={() => this.updateAffiliationScore(0)}></div></div>
-                        <div className='w-full flex items-center mx-1'><div className='rounded-full h-5 w-5 bg-[#fa7269] hover:bg-[#5d2723] cursor-pointer'
-                        onClick={() => this.updateAffiliationScore(-.5)}></div></div>
-                        <div className='w-full flex items-center mx-1'><div className='rounded-full h-5 w-5 bg-[#d53767] hover:bg-[#73253d] cursor-pointer'
-                        onClick={() => this.updateAffiliationScore(-1)}></div></div>
+                    <ScoreUpdateTicker contentType = {'post'} postCallback = {updateAffiliationScoreCallback} scoreUpdate = {1}
+                    ref={this.state.scoreUpdateRefs[1]} />
+                    <ScoreUpdateTicker contentType = {'post'} postCallback = {updateAffiliationScoreCallback} scoreUpdate = {.5}
+                    ref={this.state.scoreUpdateRefs[.5]} />
+                    <ScoreUpdateTicker contentType = {'post'} postCallback = {updateAffiliationScoreCallback} scoreUpdate = {0}
+                    ref={this.state.scoreUpdateRefs[0]} />
+                    <ScoreUpdateTicker contentType = {'post'} postCallback = {updateAffiliationScoreCallback} scoreUpdate = {-.5}
+                    ref={this.state.scoreUpdateRefs[-.5]} />
+                    <ScoreUpdateTicker contentType = {'post'} postCallback = {updateAffiliationScoreCallback} scoreUpdate = {-1}
+                    ref={this.state.scoreUpdateRefs[-1]} />
                 </div>
             </div>
         )
