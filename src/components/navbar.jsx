@@ -8,12 +8,14 @@ class Navbar extends Component {
         super(props);
         this.state = {
             user: null,
+            currentPage: ''
         }
+
     }
 
     componentDidMount() {
         this.fetchUser();
-        console.log(this.state.user)
+        this.setPageTicker();
     }
     
     async fetchUser() {
@@ -26,6 +28,27 @@ class Navbar extends Component {
         }
     }
 
+    setPageTicker() {
+
+        const regexWrite = /^http:\/\/localhost:5173\/write$/;
+        const regexArticle = /^http:\/\/localhost:5173\/article\/[a-zA-Z0-9]{24}$/;
+        const regexPage = /^http:\/\/localhost:5173\/(?:[a-zA-Z0-9]{24})?$/;
+        const regexUser = /^http:\/\/localhost:5173\/user\/[a-zA-Z0-9]{24}$/;
+        const url = window.location.href;
+
+        if (regexPage.test(url) || regexArticle.test(url)) {
+            this.setState({currentPage: 'articles'});
+            console.log('articles')
+        } else if (regexWrite.test(url)) {
+            this.setState({currentPage : 'write'});
+            console.log('write')
+        } else {
+            this.setState({currentPage : 'profile'});
+            console.log('profile', url)
+        }
+
+    }
+
     directProfileBtnClick(user) {
         if (!user) {
             window.location = '/login'
@@ -36,7 +59,8 @@ class Navbar extends Component {
     
     render() {
 
-        const {user} = this.state;
+        const {user, currentPage} = this.state;
+        console.log(currentPage)
 
         return(
             <div className='h-16 border-b mt-1 p-4 flex items-center'>
@@ -45,11 +69,11 @@ class Navbar extends Component {
                     <span style={{ color: '#C62368' }}>Box</span>
                 </h1>
                 <div className="ml-auto hidden md:flex justify-between w-3/6">
-                    <h1 className="text-2xl cursor-pointer hover:text-gray-500 transition duration-300" onClick={() => window.location = '/'}>Articles</h1>
-                    <h1 className="text-2xl cursor-pointer hover:text-gray-500 transition duration-300" onClick = {() => {window.location = '/write'}}>Write</h1>
-                    <div className='flex mr-8 lg:mr-16 cursor-pointer'
+                <h1 className={`text-2xl cursor-pointer ${currentPage === 'articles' ? 'bg-gray-200 hover:bg-gray-400' : ''} rounded-lg px-2 transition duration-300`} onClick={() => window.location = '/'}>Articles</h1>
+                    <h1 className={`text-2xl cursor-pointer ${currentPage === 'write' ? 'bg-gray-200 hover:bg-gray-400' : ''} rounded-lg px-2 transition duration-300`} onClick = {() => {window.location = '/write'}}>Write</h1>
+                    <div className={`flex mr-8 lg:mr-16 cursor-pointer transition duration-200 rounded-lg px-2 ${currentPage === 'profile' ? 'bg-gray-200 hover:bg-gray-400' : ''}`}
                     onClick = {() => {this.directProfileBtnClick(user)}}>
-                        <h1 className={`${user ? 'font-bold' : ''} text-2xl  hover:text-gray-500 transition duration-300`} >
+                        <h1 className={`${user ? 'font-bold' : ''} text-2xl`} >
                                 {user ? user.name : 'Log In'}
                         </h1>
                         {user && <img src={user.pfp} alt="Your image" className="h-8 w-8 bg-cover ml-2 rounded-full" style={{ borderRadius: "50%" }} />}
