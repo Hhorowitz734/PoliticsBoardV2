@@ -44,8 +44,8 @@ class Article extends Component {
             <div className="col-span-1">
               <h1 className="text-2xl">{this.position}</h1>
             </div>
-            <div className="col-span-10 flex">
-              <h1 className="text-xl text-left">{this.articleObject.title}</h1>
+            <div className="col-span-10 flex overflow-hidden items-center">
+              <h1 className="text-xl text-left overflow-hidden">{this.articleObject.title}</h1>
               <h1 className="mx-1 font-bold">&middot;</h1>
               <h1 className="mx-1 text-lg">{this.articleObject.userName}</h1>
             </div>

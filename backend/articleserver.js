@@ -277,6 +277,27 @@ app.post('/api/posts/updatecommentscore', async (req, res) => {
   }
 });
 
+//Post method to like a post
+app.post('/api/posts/like-post', async (req, res) => {
+  const {postID, likes} = req.body;
+
+  const postCollection = db.collection('posts');
+
+  try {
+    const result = await postCollection.updateOne(
+      { _id: new ObjectId(postID) },
+      { $inc: { likes: likes } }
+    );
+
+    if (result.modifiedCount === 1) {
+      res.json({ message: 'Post likes updated successfully.' });
+    } else {
+      res.status(404).json({ error: 'Post not found.' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+})
 
 
   
