@@ -46,30 +46,35 @@ class ArticleCard extends Component {
             onMouseEnter={this.handleMouseEnter}
             onMouseLeave={this.handleMouseLeave}
             onClick = {(e) => {window.location = `/article/${this.id}`}}>
-                <div>
-                    <div className="flex items-center">
-                        <h1 className="text-2xl mt-2">{this.title}</h1>
-                        <AiOutlineHeart className="m-2 mt-5 text-xl"/>
-                        <BiShare className="m-2 mt-5 text-xl font-thin"/>
-                    </div>
-                    <div className="flex items-center">
-                    <img src={this.user.pfp} alt="Your image" className="h-8 w-8 bg-cover mr-1 rounded-full" style={{ borderRadius: "50%" }} />
-                        <h1 className="m-2 font-bold">&middot;</h1>
-                        <h1 className="mt-2 font-bold">{this.name}</h1>
-                        <h1 className="m-2 font-bold">&middot;</h1>
-                        <h1 className="mt-2">{this.date}</h1>
-                        <h1 className="m-2 font-bold">&middot;</h1>
-                        <div className="hidden md:flex">
-                           {this.tags && this.tags.length > 0 && (
-                                this.tags.map((tag, index) => <Tag tagObject = {tag} key={index} />)
-                           )}
+                <div className='w-full'>
+                    <div className="flex w-full items-center">
+                        <h1 className="text-2xl mt-2 overflow-x-hidden">{this.title}</h1>
+                        <div className='flex ml-auto'>
+                            <div className={`h-8 rounded-lg bg-gray-200 hover:bg-gray-400 bg-opacity-40 cursor-pointer transition duration-100 flex items-center justify-center text-2xl w-8 ml-2`}
+                            onClick = {4}><AiOutlineHeart /></div>
+                            <div className={`h-8 rounded-lg bg-gray-200 hover:bg-gray-400 bg-opacity-40 cursor-pointer transition duration-100 flex items-center justify-center text-2xl w-8 ml-2`}
+                            onClick = {4}><BiShare /></div>
                         </div>
                     </div>
-                    <div className="flex flex-wrap md:hidden lg:m-0 my-2">
-                        {this.tags && this.tags.length > 0 && (
-                            this.tags.map((tag, index) => <Tag tagObject = {tag} key={index} />)
-                        )}
+                    <div className="flex items-center h-8 my-1">
+                        <img src={this.user.pfp} alt="Your image" className="h-8 w-8 bg-cover mr-1 rounded-full" style={{ borderRadius: "50%" }} />
+                            <h1 className="mx-2 font-bold">&middot;</h1>
+                            <h1 className="font-bold">{this.name}</h1>
+                            <h1 className="mx-2 font-bold">&middot;</h1>
+                            <h1 className="">{this.date}</h1>
+                            {this.tags.length > 0 && <h1 className="mx-2 first-letter:font-bold">&middot;</h1>}
+                            <div className="hidden md:flex">
+                            {this.tags && this.tags.length > 0 && (
+                                    this.tags.map((tag, index) => <Tag tagObject = {tag} key={index} />)
+                            )}
+                            </div>
+                            
                     </div>
+                        <div className="flex flex-wrap md:hidden lg:m-0 my-2">
+                            {this.tags && this.tags.length > 0 && (
+                                this.tags.map((tag, index) => <Tag tagObject = {tag} key={index} />)
+                            )}
+                        </div>
                     <h1 className = 'overflow-y-hidden' dangerouslySetInnerHTML={{__html: this.article}}></h1>
                 </div>
             </div>
