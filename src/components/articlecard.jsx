@@ -41,7 +41,7 @@ class ArticleCard extends Component {
         const {bgOpacity} = this.state;
 
         return (
-            <div className="ml-2 h-1/3 md:h-64 lg:h-56 w-full border border-l-transparent border-t-transparent border-r-transparent flex overflow-hidden transition duration-150 cursor-pointer px-2"
+            <div className="m-1 h-1/3 md:h-64 lg:h-56 w-full rounded-lg border border-l-transparent border-t-transparent border-r-transparent flex overflow-hidden transition  cursor-pointer px-2"
             style={{ backgroundColor: this.baseColor + bgOpacity }}
             onMouseEnter={this.handleMouseEnter}
             onMouseLeave={this.handleMouseLeave}

@@ -35,7 +35,7 @@ class Article extends Component {
     const {fullColor} = this.state;
 
     return (
-      <div data-testid='trending-article-component' className="grid grid-cols-11 w-full h-14 items-center cursor-pointer transition duration-150 px-2" key={this.position}
+      <div data-testid='trending-article-component' className="grid grid-cols-11 w-full h-14 items-center cursor-pointer transition px-2 rounded-lg mt-1" key={this.position}
       style = {{backgroundColor: fullColor}}
       onMouseEnter={this.handleMouseEnter}
       onMouseLeave={this.handleMouseLeave}
