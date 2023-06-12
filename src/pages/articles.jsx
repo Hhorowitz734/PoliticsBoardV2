@@ -24,8 +24,8 @@ class Articles extends Component {
 
   async componentDidMount() {
     try {
-      await this.fetchFeed();
       await this.fetchUser();
+      await this.fetchFeed();
       document.body.style.overflow = 'hidden';
     } catch (error) {
       console.log(error);
@@ -66,8 +66,8 @@ class Articles extends Component {
         <Navbar />
         <div className="grid grid-cols-3">
             <div id="articlesbar" className="max-h-screen scrollbar-thumb-gray-400 scrollbar-track-gray-300 scrollbar-thin col-span-3 lg:col-span-2 border border-l-transparent border-t-transparent border-b-tranparent px-2 overflow-x-hidden overflow-y-scroll">
-            {feed && user && feed.length > 0 ? (
-                feed.map((article, index) => <ArticleCard articleObject = {article} userLikes = {user.likedIDs} userID = {user._id} key={index} />)
+            {feed && feed.length > 0 ? (
+                feed.map((article, index) => <ArticleCard articleObject = {article} userLikes = {user ? user.likedIDs : null} userID = {user ? user._id : null} key={index} />)
             ) : (
                 <h1 className='text-6xl font-bold'>No Posts Yet.</h1>
             )}

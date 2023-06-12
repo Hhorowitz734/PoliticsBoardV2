@@ -18,8 +18,8 @@ class ArticleCard extends Component {
         this.name = props.articleObject.userName;
         this.user = {
             pfp: props.articleObject.userPic,
-            likes: props.userLikes,
-            id: props.userID
+            likes: props.userLikes === undefined ? [] : props.userLikes,
+            id: props.userID === undefined ? null : props.userID,
         }
 
         this.tags = props.articleObject.tags;
@@ -43,9 +43,11 @@ class ArticleCard extends Component {
     };
 
     componentDidMount() {
-        for (let like of this.user.likes) {
-            if (this.id === like) {
-                this.setState({isLiked : true})
+        if (this.user.id !== null){
+            for (let like of this.user.likes) {
+                if (this.id === like) {
+                    this.setState({isLiked : true})
+                }
             }
         }
     }
@@ -81,8 +83,8 @@ class ArticleCard extends Component {
                     <div className="flex w-full items-center">
                         <h1 className="text-2xl mt-2 overflow-x-hidden">{this.title}</h1>
                         <div className='flex ml-auto'>
-                            <div className={`h-8 rounded-lg ${isLiked ? 'bg-emerald-500' : 'bg-gray-200'} hover:bg-gray-400 bg-opacity-40 cursor-pointer transition duration-100 flex items-center justify-center text-2xl w-8 ml-2`}
-                            onClick = {this.likePost}><AiOutlineHeart /></div>
+                           {this.user.id !== null && <div className={`h-8 rounded-lg ${isLiked ? 'bg-emerald-500' : 'bg-gray-200'} hover:bg-gray-400 bg-opacity-40 cursor-pointer transition duration-100 flex items-center justify-center text-2xl w-8 ml-2`}
+                            onClick = {this.likePost}><AiOutlineHeart /></div>}
                             <div className={`h-8 rounded-lg bg-gray-200 hover:bg-gray-400 bg-opacity-40 cursor-pointer transition duration-100 flex items-center justify-center text-2xl w-8 ml-2`}
                             onClick = {this.copyToClipboard}><BiShare /></div>
                         </div>
