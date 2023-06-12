@@ -11,6 +11,7 @@ import PostVoting from '../components/postvoting';
 import Tag from '../components/tag';
 
 import Verifier from '../components/middleware/verifier';
+import PostLiker from '../components/middleware/post_liker';
 
 class ViewArticle extends Component{
 
@@ -20,7 +21,8 @@ class ViewArticle extends Component{
         this.state = {
             article: null,
             comments: null,
-            user: null
+            user: null,
+            isLiked: false
         }
     }
 
@@ -34,15 +36,29 @@ class ViewArticle extends Component{
         try {
             const user = await Verifier();
             this.setState({user: user})
+
+            for (let articleID of user.likedIDs){
+                if (articleID === this.state.article._id){
+                    this.setState({isLiked: true})
+                }
+            }
+
+
         } catch (error) {
             console.error('Error retrieving user:', error);
         }
     }
 
+    likePost = async () => {
+        PostLiker(this.state.article._id, this.state.user._id);
+        this.setState({isLiked : !this.state.isLiked})
+      }
+      
+
 
     render() {
 
-        const {article, comments, user} = this.state;
+        const {article, comments, user, isLiked} = this.state;
 
         return(
             <div className="flex flex-col min-h-screen bg-white">
@@ -50,7 +66,8 @@ class ViewArticle extends Component{
                 <h1 className='w-full text-4xl font-bold text-center mt-4'>{article ? article.title : 'Loading...'}</h1>
                 <div className='w-11/12 flex mt-4 mx-auto border-t border-b border-1 py-2'>
                     {user && <PostVoting postID = {this.articleId} userID = {user._id} currentAS = {article.affiliationScore}/>}
-                    <div className='h-12 rounded-lg bg-gray-200 hover:bg-gray-400 cursor-pointer transition duration-200 flex items-center justify-center text-2xl w-12 ml-2'><BiLike /></div>
+                    {user && <div className={`h-12 rounded-lg ${isLiked ? 'bg-emerald-500 bg-opacity-40' : 'bg-gray-200'} hover:bg-gray-400 cursor-pointer transition duration-100 flex items-center justify-center text-2xl w-12 ml-2`}
+                    onClick = {this.likePost}><BiLike /></div>}
                     <div className='h-12 rounded-lg bg-gray-200 hover:bg-gray-400 cursor-pointer transition duration-200 flex items-center justify-center text-2xl w-12 ml-2'><BiShare /></div>
                     {article && 
                         <div className='rounded-lg flex bg-gray-200 h-12 items-center px-2 mx-2 ml-auto'>

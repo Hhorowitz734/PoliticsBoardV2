@@ -38,13 +38,10 @@ class Navbar extends Component {
 
         if (regexPage.test(url) || regexArticle.test(url)) {
             this.setState({currentPage: 'articles'});
-            console.log('articles')
         } else if (regexWrite.test(url)) {
             this.setState({currentPage : 'write'});
-            console.log('write')
         } else {
             this.setState({currentPage : 'profile'});
-            console.log('profile', url)
         }
 
     }
@@ -60,7 +57,6 @@ class Navbar extends Component {
     render() {
 
         const {user, currentPage} = this.state;
-        console.log(currentPage)
 
         return(
             <div className='h-16 border-b mt-1 p-4 flex items-center'>

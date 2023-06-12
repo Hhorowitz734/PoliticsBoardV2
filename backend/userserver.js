@@ -37,7 +37,8 @@ app.post('/api/users', async (req, res) => {
 
     const serverData = { //Any data other than name, password, and email that needs to be set for a user
         posts: [],
-        pfp: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Taka_Shiba.jpg/1200px-Taka_Shiba.jpg'
+        pfp: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Taka_Shiba.jpg/1200px-Taka_Shiba.jpg',
+        likedIDs: [] //IDs of posts the user liked
     }
 
     const userData = {
@@ -102,6 +103,45 @@ app.get('/api/users', async (req, res) => {
   } catch (error) {
     console.error('Error retrieving user:', error);
     res.status(500).json({ error: 'An error occurred while retrieving the user.' });
+  }
+});
+
+//API endpoint to add/remove post from user likes
+app.post('/api/users/add-like', async (req, res) => {
+
+  const { articleID, userID } = req.body;
+
+  // Assuming you have access to the MongoDB collection for users
+  const usersCollection = db.collection('users');
+
+  try {
+    const user = await usersCollection.findOne({ _id: new ObjectId(userID) });
+
+    if (!user) {
+      return res.json({ status: 'error', error: 'User not found' });
+    }
+
+    const likedIDs = user.likedIDs || [];
+
+    const updatedLikedIDs = likedIDs.includes(articleID)
+      ? likedIDs.filter(id => id !== articleID)
+      : [...likedIDs, articleID];
+
+    
+
+    const result = await usersCollection.updateOne(
+      { _id: new ObjectId(userID) },
+      { $set: { likedIDs: updatedLikedIDs } }
+    );
+
+    if (result.modifiedCount === 0) {
+      return res.json({ status: 'error', error: 'Failed to update user' });
+    }
+
+    res.json({ status: 'success' });
+  } catch (error) {
+    console.error('Error updating liked article:', error);
+    res.status(500).json({ status: 'error', error: 'Internal server error' });
   }
 });
 
