@@ -96,7 +96,7 @@ class ProfileSidebar extends Component {
         const {user} = this.props;
 
         return(
-            <div className='flex flex-col col-span-1 m-3 rounded-xl items-center p-2'
+            <div className='flex flex-col col-span-1 m-3 rounded-xl items-center p-2 h-[88%]'
             style={{ backgroundColor: this.bg }}>
                 <h1 className='text-4xl mt-2 font-bold'>{user ? user.name : 'Loading User'}</h1>
                 <div className='mt-4 bg-red-500 rounded-full h-40 w-40 bg-center bg-cover'

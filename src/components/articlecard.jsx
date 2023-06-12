@@ -1,6 +1,8 @@
 import {React, Component} from 'react';
-import {AiOutlineHeart} from "react-icons/ai"
-import {BiShare} from "react-icons/bi"
+import {AiOutlineHeart} from "react-icons/ai";
+import {BiShare} from "react-icons/bi";
+
+import PostLiker from './middleware/post_liker';
 
 import Tag from './tag';
 
@@ -16,6 +18,8 @@ class ArticleCard extends Component {
         this.name = props.articleObject.userName;
         this.user = {
             pfp: props.articleObject.userPic,
+            likes: props.userLikes,
+            id: props.userID
         }
         this.tags = props.articleObject.tags;
 
@@ -25,6 +29,7 @@ class ArticleCard extends Component {
 
         this.state = {
             bgOpacity: `.3)`,
+            isLiked: false,
         }
     }
 
@@ -36,9 +41,27 @@ class ArticleCard extends Component {
        this.setState({bgOpacity: `.3)`})
     };
 
+    componentDidMount() {
+        for (let like of this.user.likes) {
+            if (this.id === like) {
+                this.setState({isLiked : true})
+            }
+        }
+    }
+
+    likePost = async (e) => {
+
+        e.stopPropagation();
+
+        console.log(this.id, this.user.id)
+        const increment = this.state.isLiked ? -1 : 1;
+        PostLiker(this.id, this.user.id, increment);
+        this.setState({isLiked : !this.state.isLiked})
+      }
+
     render () {
 
-        const {bgOpacity} = this.state;
+        const {bgOpacity, isLiked} = this.state;
 
         return (
             <div className="m-1 h-1/3 md:h-64 lg:h-56 w-full rounded-lg border border-l-transparent border-t-transparent border-r-transparent flex overflow-hidden transition  cursor-pointer px-2"
@@ -50,8 +73,8 @@ class ArticleCard extends Component {
                     <div className="flex w-full items-center">
                         <h1 className="text-2xl mt-2 overflow-x-hidden">{this.title}</h1>
                         <div className='flex ml-auto'>
-                            <div className={`h-8 rounded-lg bg-gray-200 hover:bg-gray-400 bg-opacity-40 cursor-pointer transition duration-100 flex items-center justify-center text-2xl w-8 ml-2`}
-                            onClick = {4}><AiOutlineHeart /></div>
+                            <div className={`h-8 rounded-lg ${isLiked ? 'bg-emerald-500' : 'bg-gray-200'} hover:bg-gray-400 bg-opacity-40 cursor-pointer transition duration-100 flex items-center justify-center text-2xl w-8 ml-2`}
+                            onClick = {this.likePost}><AiOutlineHeart /></div>
                             <div className={`h-8 rounded-lg bg-gray-200 hover:bg-gray-400 bg-opacity-40 cursor-pointer transition duration-100 flex items-center justify-center text-2xl w-8 ml-2`}
                             onClick = {4}><BiShare /></div>
                         </div>
