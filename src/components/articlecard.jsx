@@ -21,6 +21,7 @@ class ArticleCard extends Component {
             likes: props.userLikes,
             id: props.userID
         }
+
         this.tags = props.articleObject.tags;
 
         const affiliationScore = props.articleObject.affiliationScore;
@@ -55,7 +56,7 @@ class ArticleCard extends Component {
 
         const increment = this.state.isLiked ? -1 : 1;
         PostLiker(this.id, this.user.id, increment);
-        this.setState({isLiked : !this.state.isLiked})
+        this.setState({isLiked : !this.state.isLiked});
       }
 
     copyToClipboard = (e) => {

@@ -39,7 +39,7 @@ app.post('/api/tags', async (req, res) => {
             //Otherwise, creates new tag
             const tagData = {
                 topic: tag.topic,
-                articles: [article._id],
+                articles: [article._id], 
                 color: `rgba(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, `,
             }
 

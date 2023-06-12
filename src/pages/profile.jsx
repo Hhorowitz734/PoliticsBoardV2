@@ -49,7 +49,7 @@ class Profile extends Component {
                         {feed && <ProfileSidebar user = {user} userPosts = {feed} />}
                         <div className='h-[90%] scrollbar-thumb-gray-400 scrollbar-track-gray-300 scrollbar-thin col-span-3 lg:col-span-2 border border-l-transparent border-t-transparent border-b-tranparent px-2 overflow-x-hidden overflow-y-scroll'>
                         {feed && feed.length > 0 ? (
-                            feed.map((article, index) => <ArticleCard articleObject = {article} key={index} />)
+                            feed.map((article, index) => <ArticleCard articleObject = {article} userID = {user._id} userLikes = {user.likedIDs} key={index} />)
                             ) : (
                             <h1 className='text-6xl font-bold'>No Posts Yet.</h1>
                         )}
