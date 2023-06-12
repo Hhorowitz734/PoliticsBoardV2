@@ -55,6 +55,10 @@ class ViewArticle extends Component{
         this.setState({isLiked : !this.state.isLiked})
       }
       
+    copyToClipboard = (e) => {
+        const currentURL = window.location.href;
+        navigator.clipboard.writeText(currentURL);
+    }
 
 
     render() {
@@ -69,7 +73,8 @@ class ViewArticle extends Component{
                     {user && <PostVoting postID = {this.articleId} userID = {user._id} currentAS = {article.affiliationScore}/>}
                     {user && <div className={`h-12 rounded-lg ${isLiked ? 'bg-emerald-500 bg-opacity-50' : 'bg-gray-200'} hover:bg-gray-400 cursor-pointer transition duration-100 flex items-center justify-center text-2xl w-12 ml-2`}
                     onClick = {this.likePost}><BiLike /></div>}
-                    <div className='h-12 rounded-lg bg-gray-200 hover:bg-gray-400 cursor-pointer transition duration-200 flex items-center justify-center text-2xl w-12 ml-2'><BiShare /></div>
+                    <div className='h-12 rounded-lg bg-gray-200 hover:bg-gray-400 cursor-pointer transition duration-200 flex items-center justify-center text-2xl w-12 ml-2'
+                    onClick = {this.copyToClipboard}><BiShare /></div>
                     {article && article.tags.length > 0 && 
                         <div className='rounded-lg flex bg-gray-200 h-12 items-center px-2 mx-2 ml-auto'>
                         {article.tags && article.tags.length > 0 && (

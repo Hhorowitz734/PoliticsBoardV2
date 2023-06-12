@@ -53,11 +53,18 @@ class ArticleCard extends Component {
 
         e.stopPropagation();
 
-        console.log(this.id, this.user.id)
         const increment = this.state.isLiked ? -1 : 1;
         PostLiker(this.id, this.user.id, increment);
         this.setState({isLiked : !this.state.isLiked})
       }
+
+    copyToClipboard = (e) => {
+
+        e.stopPropagation();
+        
+        const currentURL = window.location.href + `article/${this.id}`;
+        navigator.clipboard.writeText(currentURL);
+    }
 
     render () {
 
@@ -76,7 +83,7 @@ class ArticleCard extends Component {
                             <div className={`h-8 rounded-lg ${isLiked ? 'bg-emerald-500' : 'bg-gray-200'} hover:bg-gray-400 bg-opacity-40 cursor-pointer transition duration-100 flex items-center justify-center text-2xl w-8 ml-2`}
                             onClick = {this.likePost}><AiOutlineHeart /></div>
                             <div className={`h-8 rounded-lg bg-gray-200 hover:bg-gray-400 bg-opacity-40 cursor-pointer transition duration-100 flex items-center justify-center text-2xl w-8 ml-2`}
-                            onClick = {4}><BiShare /></div>
+                            onClick = {this.copyToClipboard}><BiShare /></div>
                         </div>
                     </div>
                     <div className="flex items-center h-8 my-1">
