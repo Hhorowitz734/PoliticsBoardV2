@@ -4,7 +4,7 @@ import Navbar from '../components/navbar';
 import ProfileSidebar from '../components/profilesidebar';
 import ArticleCard from '../components/articlecard';
 
-import Verifier from '../components/middleware/verifier';
+import SingleUserRetriever from '../components/middleware/singleuserretriever';
 import UserFeedRetriever from '../components/middleware/userfeedretriever';
 
 class Profile extends Component {
@@ -20,7 +20,7 @@ class Profile extends Component {
 
     async componentDidMount() { //Loads in user profile
         try {
-            const user = await Verifier(this.userId);
+            const user = await SingleUserRetriever(this.userId); //THIS DOESNT RETRIEVE A GIVEN BASED ON THIS, IT GETS IT FROM DA COKIE
             this.setState({ user })
           } catch (error) {
             console.error('Error retrieving user:', error);

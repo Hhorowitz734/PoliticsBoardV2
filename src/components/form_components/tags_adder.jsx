@@ -52,8 +52,8 @@ class TagAdder extends Component {
         const {allTags, selectedTags} = this.state;
 
         return (
-            <div className="mt-8 w-2/3 h-96 bg-gray-200 p-2">
-                <h1 className="text-center text-2xl">Tag Your Post</h1>
+            <div className="mt-8 w-2/3 h-96 bg-gray-200 p-2 rounded-lg">
+                <h1 className="text-center text-2xl mb-2">Tag Your Post</h1>
                 <div className="flex flex-grow bg-white rounded-lg w-full h-3/4 m-auto overflow-y-scroll overflow-x-hidden">
                     <div className="flex flex-wrap">
                         {allTags && allTags.map((tag) => (

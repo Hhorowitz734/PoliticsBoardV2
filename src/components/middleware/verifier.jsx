@@ -1,6 +1,6 @@
 //This function verifies the user based on the user token and returns the user object
 
-function Verifier(setUserState) {
+function Verifier() {
 
     //Part 1 --> Retrieves user key from cookies if it exists
     var userKey = null;

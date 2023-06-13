@@ -64,6 +64,7 @@ class ViewArticle extends Component{
     render() {
 
         const {article, comments, user, isLiked} = this.state;
+        console.log(article)
 
         return(
             <div className="flex flex-col min-h-screen bg-white">
@@ -76,7 +77,7 @@ class ViewArticle extends Component{
                     <div className='h-12 rounded-lg bg-gray-200 hover:bg-gray-400 cursor-pointer transition duration-200 flex items-center justify-center text-2xl w-12 ml-2'
                         onClick = {this.copyToClipboard}><BiShare /></div>
                     {article && user && <div className='h-12 rounded-lg bg-gray-200 hover:bg-gray-400 cursor-pointer transition duration-200 flex items-center justify-center ml-2 px-2'
-                        onClick = {() => {window.location = article.userName === 'Anonymous' ? '/' : `/user/${user._id}`}}>
+                        onClick = {() => {window.location = article.userName === 'Anonymous' ? '/' : `/user/${article.userObject._id}`}}>
                         <div className='bg-red-500 rounded-full h-8 w-8 bg-center bg-cover'
                         style={{ backgroundImage: `url(${article.userName === 'Anonymous' ? article.userPic : user.pfp})` }}></div>
                     </div>}
